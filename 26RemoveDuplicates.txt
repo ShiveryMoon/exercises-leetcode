@@ -1,0 +1,28 @@
+class Solution:
+    def removeDuplicates(self, nums):
+        if len(nums)==0:
+            return 0
+        elif len(nums)==1:
+            return 1
+        else:
+            left = 0
+            right = 1
+            while right<len(nums):
+                if nums[right] != nums[right-1]:
+                    left += 1
+                    nums[left] = nums[right]
+                    right += 1
+                else:
+                    right += 1
+            return left+1
+			
+class Solution:
+    def removeDuplicates(self, nums):
+        lastIndex = 0
+        lastNum = None
+        for num in nums:
+            if lastNum != num:
+                lastNum = num
+                nums[lastIndex]=lastNum
+                lastIndex+=1
+        return lastIndex

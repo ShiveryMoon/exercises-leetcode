@@ -1,0 +1,20 @@
+class Solution:
+    def removeDuplicates(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        lastIndex = 0
+        lastNum = None
+        legal = False
+        for num in nums:
+            if lastNum != num:
+                lastNum = num
+                nums[lastIndex]=lastNum
+                lastIndex += 1
+                legal=True
+            elif lastNum==num and legal:
+                nums[lastIndex]=lastNum
+                lastIndex += 1
+                legal=False
+        return lastIndex

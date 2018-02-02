@@ -1,0 +1,18 @@
+class Solution:
+    def removeElement(self, nums, val):
+        left = 0
+        right = len(nums)-1
+        while left<=right:
+            if nums[left] == val:
+                while nums[right]==val and right>=0:
+                    right -= 1
+                if left<right:
+                    nums[left]=nums[right]
+                    left += 1
+                    right -= 1
+                else:
+                    break
+            else:
+                left += 1
+        return left
+			
