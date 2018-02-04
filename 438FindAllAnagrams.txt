@@ -1,0 +1,24 @@
+class Solution:
+    def findAnagrams(self, s, p):
+        """
+        :type s: str
+        :type p: str
+        :rtype: List[int]
+        """
+        res = []
+        n, m = len(s), len(p)
+        if n < m: return res
+        phash, shash = [0]*123, [0]*123
+        for x in p:
+            phash[ord(x)] += 1
+        for x in s[:m]:
+            shash[ord(x)] += 1
+        for i in range(m, n+1):
+            if shash == phash:
+                res.append(i - m)
+            if i!=n:
+                shash[ord(s[i])] += 1
+                shash[ord(s[i-m])] -= 1
+        return res
+		
+#如果用Counter对象可以超级简单解决这个问题，不过那样有些作弊

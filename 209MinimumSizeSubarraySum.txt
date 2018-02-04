@@ -1,0 +1,22 @@
+class Solution:
+    def minSubArrayLen(self, s, nums):
+        """
+        :type s: int
+        :type nums: List[int]
+        :rtype: int
+        """
+        left,right=0,0
+        minlength = len(nums)+1
+        sums = 0
+        while right<len(nums):
+            while sums<s and right<len(nums):
+                sums += nums[right]
+                right+=1
+            while sums>=s:
+                sums -= nums[left]
+                left+=1
+            minlength = min(minlength, right-left+1)
+			#注：这个时候，滑动窗口整体向前移了一格，即sums是由[left-1,right-1]区间内的元素累加而得。
+        if minlength == len(nums)+1:
+            return 0
+        return minlength

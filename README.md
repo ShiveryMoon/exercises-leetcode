@@ -1,2 +1,2 @@
 # exercises-leetcode
-在LeetCode上刷的题
+记录我在LeetCode上刷的题
