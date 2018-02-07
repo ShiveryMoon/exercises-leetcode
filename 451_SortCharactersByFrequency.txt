@@ -1,0 +1,30 @@
+from collections import Counter
+
+class Solution:
+    def frequencySort(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        rs = ''
+        c = Counter(s)
+        l = c.most_common()
+        for pair in l:
+            rs += pair[0] * pair[1]
+        return rs
+		
+-----------------------------------------------用Counter对象终究不太厚道呀
+class Solution:
+    def frequencySort(self, s):
+        rs = ''
+        d={}
+        for letter in s:
+            if d.setdefault(letter,0):
+                d[letter]+=1
+            else:
+                d[letter]=1
+		#l=sorted(d.items(),key=lambda x:x[1],reverse=True)
+        l=sorted(zip(d.values(),d.keys()),reverse=True)
+        for pair in l:
+            rs += pair[0] * pair[1]
+        return rs

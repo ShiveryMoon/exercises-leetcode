@@ -1,0 +1,20 @@
+class Solution:
+    def wordPattern(self, pattern, str):
+        """
+        :type pattern: str
+        :type str: str
+        :rtype: bool
+        """
+        s=str.split()
+        return list(map(pattern.find,pattern))==list(map(s.index,s))
+
+#第二种：		
+def wordPattern(pattern, str):
+    f = lambda s: list(map({}.setdefault, s, range(len(s))))
+    return f(pattern) == f(str.split())
+	
+#第三种：
+def wordPattern(self, pattern, str):
+    s = pattern
+    t = str.split()
+    return len(set(zip(s, t))) == len(set(s)) == len(set(t)) and len(s) == len(t)

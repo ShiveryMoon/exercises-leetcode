@@ -1,0 +1,50 @@
+class Solution:
+    def groupAnagrams(self, strs):
+        """
+        :type strs: List[str]
+        :rtype: List[List[str]]
+        """
+        tupleList=[]
+        d={}
+        index=0
+        for str in strs:
+            l=list(str)
+            strhash=[0]*123
+            for letter in l:
+                strhash[ord(letter)]+=1
+            strtuple=tuple(strhash)
+            tupleList.append(strtuple)
+        for str in strs:	
+            d[tupleList[index]]=d.get(tupleList[index],[])+[str]
+            index+=1
+        return list(d.values())
+ 
+def groupAnagrams(self, strs):
+    d = {}
+    for w in strs:
+        d[tuple(sorted(w))] = d.get(tuple(sorted(w)), [])+[w]
+    return list(d.values())
+	
+def groupAnagrams(self, strs):
+	dict = {}
+	for word in strs:
+		dict.setdefault(''.join(sorted(word)), []).append(word)     
+	return list(dict.values())
+		
+		
+		
+第一个算法是我想出来的，我认为是On的时间复杂度。
+而第二第三个算法是Onlogn。
+我之所以没想出这么简洁的算法，是因为我一开始就放弃了排序，因为排序明显时间复杂度更高，我觉得On就能搞定。
+第二第三个算法确实是蛮优美的。。我从这两个算法身上学到了dict.get和dict.setdefault的另一个区别。
+在谈论这个区别之前，我先说一下，我对dict还有一点没了解清楚。
+dict={1:[1],2:2}
+dict[1].append(2)会直接改变dict，dict变成{1:[1,2],2:2}
+dict[1]+[2]不会改变dict，而是会返回一个[1,2]，因为+不是调用list本身的函数，这是创建新对象。所以不会影响到list
+而,对于dict[2]来说，它是一个int，是不可变对象。所以不管你怎么对dict[2]进行操作，比如dict[2]+1，都不会改变dict，只会返回新对象。
+然后我们来谈谈get和setdefault
+看25行和31行
+一开始字典里空无一物，如果调用get函数，就需要写成赋值形式，用等号。
+而setdefault就不需要，如果他当前查找的这个key不存在，就生成一个key，value使用默认值。
+并且还有一个细节。对于get来说，它可以使用+[w]，也可以使用.append(w)，反正都会赋值回去，dict是一定会被改变的。
+而setdefault必须用append，否则dict不会改变

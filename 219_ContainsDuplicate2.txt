@@ -1,0 +1,31 @@
+class Solution:
+    def containsNearbyDuplicate(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: bool
+        """
+        s=set()
+        for i in range(len(nums)):
+            if nums[i] in s:
+                return True
+            s.add(nums[i])
+            if len(s)==k+1:#要保持s中元素个数为k
+                s.remove(nums[i-k])
+        return False
+同一时间，在一起做比较的元素的最大个数是k+1，但是滑动窗口的大小是k
+因为我们是将滑动窗口外的一个数来和滑动窗口里的所有数作比较，见10、11、12行，加上这个需要比较的数，才是k+1
+注意，这道题的滑动窗口的大小是固定的，所以我们并不需要设置一个left一个right
+这样一来会有很大的区别，仔细体会。		
+		
+
+但其实这道题不需要用到滑动窗口，因为只要同一个元素出现两次就能True，这用一个if判断一下就好了
+class Solution:
+    def containsNearbyDuplicate(self, nums, k):
+        d={}
+        for i,num in enumerate(nums):
+            if num in d and i-d[num]<=k:
+                return True
+            d[num]=i
+        return False
+这尼玛真简单。。。。

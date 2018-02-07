@@ -1,0 +1,15 @@
+class Solution:
+    def isHappy(self, n):
+        """
+        :type n: int
+        :rtype: bool
+        """
+        s=set()
+        i=n
+        while i!=1:
+            i=sum([int(k)*int(k) for k in str(i)])
+            if i in s:
+                return False
+            else:
+                s.add(i)
+        return True

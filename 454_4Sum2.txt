@@ -1,0 +1,21 @@
+class Solution:
+    def fourSumCount(self, A, B, C, D):
+        """
+        :type A: List[int]
+        :type B: List[int]
+        :type C: List[int]
+        :type D: List[int]
+        :rtype: int
+        """
+        d={}
+        s=0
+        for i in range(len(A)):
+            for j in range(len(B)):
+                if A[i]+B[j] not in d:
+                    d[A[i]+B[j]]=1
+                else:
+                    d[A[i]+B[j]]+=1
+        for i in range(len(C)):
+            for j in range(len(D)):
+                s += d.get(0-C[i]-D[j],0)
+        return s

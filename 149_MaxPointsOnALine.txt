@@ -1,0 +1,26 @@
+import numpy
+
+class Solution:
+    def maxPoints(self, points):
+        """
+        :type points: List[Point]
+        :rtype: int
+        """
+        maxP=0
+        for i in points:
+            d={}
+            for j in points:
+                if i.x==j.x and i.y==j.y:
+                    d[None]=d.get(None,0)+1
+                elif j.x-i.x==0:
+                    d['vertical']=d.get('vertical',0)+1
+                else:
+                    slope=(j.y-i.y)*numpy.longdouble(1)/(j.x-i.x)
+                    d[slope]=d.get(slope,0)+1
+            maxp=0
+            for k,v in d.items():
+                if k!=None and v>maxp:
+                    maxp=v
+            maxp+=d[None]
+            maxP=max(maxp,maxP)
+        return maxP
