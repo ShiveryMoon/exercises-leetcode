@@ -1,0 +1,28 @@
+class Solution:
+    def partition(self, head, x):
+        """
+        :type head: ListNode
+        :type x: int
+        :rtype: ListNode
+        """
+        h1 = l1 = ListNode(0)
+        h2 = l2 = ListNode(0)
+        while head:
+            if head.val < x:
+                l1.next = head
+                l1 = l1.next
+            else:
+                l2.next = head
+                l2 = l2.next
+            head = head.next
+        l2.next = None
+        l1.next = h2.next
+        return h1.next
+		
+这道题的技巧，叫做dummyhead，即假的头。
+要理解dummyhead的好处，先看看如果不用dummyhead会发生什么。
+这道题的主要思路，是创建两条链表，一条存储lessthan，另一条存储gte，最后把两条接上。
+问题来了，怎么找两条链表的头？得先有头，才能开始遍历整个链表，不然没法归类。
+为了找到两条链表的头，就需要将遍历分为两部分，第一次遍历是为了找头，然后再第二次遍历
+这个过程会很复杂，因为，原始头、lt头和lt尾，gte头和gte尾全都要维护，而且，你妈的可能整个链表就全都是lt或者全都是gte，这两个头可能只有一个，这些都要分情况。
+用了dummyhead就舒服多了。

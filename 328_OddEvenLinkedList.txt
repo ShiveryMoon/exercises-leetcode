@@ -1,0 +1,21 @@
+class Solution:
+    def oddEvenList(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        h1=l1=ListNode(0)
+        h2=l2=ListNode(0)
+        i=1
+        while head:
+            if i%2!=0: 
+                l1.next=head
+                l1=l1.next
+            else:
+                l2.next=head
+                l2=l2.next
+            i+=1
+            head=head.next
+        l1.next=h2.next
+        l2.next=None
+        return h1.next

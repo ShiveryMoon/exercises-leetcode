@@ -1,0 +1,20 @@
+class Solution:
+    def deleteDuplicates(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        if head is  None
+        originHead,left,right=None:
+            returnhead,head,head.next
+        while right:
+            if right.val==left.val:
+                right=right.next
+            else:
+                left.next=right
+                left=right
+                right=right.next
+        left.next=None
+        return originHead
+最一开始的时候我不懂得设置dummyhead，这代码很蠢。
+现在我也懒得改了。

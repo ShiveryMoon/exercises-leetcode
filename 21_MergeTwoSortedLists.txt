@@ -1,0 +1,28 @@
+class Solution:
+    def mergeTwoLists(self, l1, l2):
+        """
+        :type l1: ListNode
+        :type l2: ListNode
+        :rtype: ListNode
+        """
+        h=l=ListNode(0)
+        while l1 and l2:
+            if l1.val<l2.val:
+                l.next=l1
+                l=l.next
+                l1=l1.next
+            else:
+                l.next=l2
+                l=l.next
+                l2=l2.next
+        while l1:
+            l.next=l1
+            l=l.next
+            l1=l1.next
+        while l2:
+            l.next=l2
+            l=l.next
+            l2=l2.next
+        return h.next
+		
+空间复杂度是O1，而不是On，这比一次次新建节点实例要强多了。

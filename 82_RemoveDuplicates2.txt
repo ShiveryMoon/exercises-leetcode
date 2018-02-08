@@ -1,0 +1,29 @@
+class Solution:
+    def deleteDuplicates(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        h=l=ListNode(0)
+		#保持L变量指着非冗余元素，永远不要指向任何冗余元素。
+        l.next=head
+        nodup=True
+        while head and head.next:
+            if head.val == head.next.val:
+                head=head.next
+                nodup=False
+            elif nodup:
+                l=head
+                head=head.next
+            else:
+                head=head.next
+                l.next=head#只改L当前指着的节点的next的指向，L变量的指向别着急改，比如这种情况：[0,1,1,2,2,3]，两个1后面是两个2，如果刚过完两个1就改L变量的指向，那就指到2上了，这是不对的
+                nodup=True
+		#结束的时候也有两种情况。
+        if nodup:#最后这个元素是非冗余元素
+            l.next=head
+        else:#最后这个元素是冗余元素
+            l.next=head.next
+        return h.next
+		
+#这题恶心在：冗余的数全扔掉，不冗余的数留着，注意是全扔掉啊。

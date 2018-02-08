@@ -1,0 +1,36 @@
+class Solution:
+    def containsNearbyAlmostDuplicate(self, nums, k, t):
+        """
+        :type nums: List[int]
+        :type k: int
+        :type t: int
+        :rtype: bool
+        """
+        if k < 1:
+            return False
+        dic = collections.OrderedDict()
+        for n in nums:
+            key = n if not t else n // t
+            for m in (dic.get(key - 1), dic.get(key), dic.get(key + 1)):
+                if m is not None and abs(n - m) <= t:
+                    return True
+            if len(dic) == k:
+                dic.popitem(False)
+            dic[key] = n
+        return False
+		
+这个算法有两个点很难理解
+第一点是，他通过n//t，来将整个数组划分为不同的组。比如如果t=3，那么0,1,2就都映射为0号小组
+所以你就可以想到，对某个数n，他所在的组是N的话，N-1、N、N+1这三个组中，[n-t,n+t]是这三个组所代表的取值范围的一个子集。
+比如，n=10,t=3，那么，[7,13]是(6,7,8),(9,10,11),(12,13,14)这三个组所代表的的取值范围的子集。
+注意，t=0的时候就变回了containsduplicate2号题目了
+第二个点是使用有序dict。有序dict其实很简单，其实可以看成将tuple一个个推入列表中。
+如果是dic.popitem(False)，那么这个列表是先进先出的队列。
+如果是dic.popitem(True)，那么这是个后进先出的栈。
+然后算法的关键是这样的：
+对于每一个n，算出它属于哪个组，然后找找他周围的3个组(注：每个组只存一个数)有没有一个数符合要求。
+不符合要求的话，就运行171819行。
+我之前一直不明白19行，为什么可以直接这样覆盖？如果之前这个组存过一个数，这样直接覆盖不就把那个数弄没了吗？
+后来我想明白了，这永远不可能是一个覆盖，因为，n就是这个循环的主角，如果他自己所在的组有一个数，那这个数肯定是符合题目要求的，直接return True了。
+如果16行没运行，那么一定是这个n没有找到符合要求的m，那么n自己所在的组绝对没有数，是空的。所以19行就是将一对新的key:value加入了dict，而不是一个update操作
+如果程序一直在运行中，就说明当前遍历过的n都是互相分的很开的，他们都属于各自的组，不会有两个数属于同一个组，因为如果两个数属于同一个组的话程序就结束了。

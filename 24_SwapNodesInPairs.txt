@@ -1,0 +1,16 @@
+class Solution:
+    def swapPairs(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        h=l=ListNode(0)
+        h.next=head
+        while l.next and l.next.next:
+            node1=l.next
+            node2=l.next.next
+            node1.next=node2.next
+            node2.next=node1
+            l.next=node2
+            l=node1
+        return h.next
