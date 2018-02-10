@@ -1,0 +1,29 @@
+class Solution:
+    def reverseKGroup(self, head, k):
+        """
+        :type head: ListNode
+        :type k: int
+        :rtype: ListNode
+        """
+        h=l=ListNode(0)
+        h.next=head
+        hasNextLoop=True
+        while hasNextLoop:
+            j=l
+            for i in range(k):
+                if j.next:
+                    j=j.next
+                else:
+                    hasNextLoop=False
+            if hasNextLoop:
+                j=l
+                nodeList=[]
+                for i in range(k+1):
+                    nodeList.append(j)
+                    j=j.next
+                nodeList[0].next=nodeList[-1]
+                nodeList[1].next=nodeList[-1].next
+                for i in range(2,k+1):
+                    nodeList[i].next=nodeList[i-1]
+                l=nodeList[1]
+        return h.next

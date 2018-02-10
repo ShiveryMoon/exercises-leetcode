@@ -1,0 +1,25 @@
+class Solution(object):
+    def rotateRight(self, head, k):
+        """
+        :type head: ListNode
+        :type k: int
+        :rtype: ListNode
+        """
+        l=r=dummy=ListNode(0)
+        dummy.next=head
+        length=0
+        while head:
+            head=head.next
+            length+=1
+        if length==0:
+            return None
+        k=k%length
+        for i in range(k):
+            r=r.next
+        while r.next:
+            l=l.next
+            r=r.next
+        r.next=dummy.next
+        dummy.next=l.next
+        l.next=None
+        return dummy.next

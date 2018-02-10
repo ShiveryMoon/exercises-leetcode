@@ -1,0 +1,26 @@
+class Solution(object):
+    def evalRPN(self, tokens):
+        """
+        :type tokens: List[str]
+        :rtype: int
+        """
+        stack=[]
+        for token in tokens:
+            if token in '+-*/':
+                op2=stack.pop()
+                op1=stack.pop()
+                result=self.domath(op1,op2,token)
+                stack.append(result)
+            else:
+                stack.append(int(token))
+        return stack[0]
+    
+    def domath(self,op1,op2,token):
+        if token=='+':
+            return op1+op2
+        elif token=='-':
+            return op1-op2
+        elif token=='*':
+            return op1*op2
+        else:
+            return int(op1/op2)

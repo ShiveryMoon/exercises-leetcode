@@ -1,0 +1,24 @@
+class Solution:
+    def insertionSortList(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        p = dummy = ListNode(0)
+        cur = dummy.next = head
+        while cur and cur.next:
+            val = cur.next.val
+            if cur.val <= val:
+                cur = cur.next
+                continue
+            if p.next.val > val:
+                p = dummy
+            while p.next.val <= val:
+                p = p.next
+            new = cur.next
+            cur.next = new.next
+            new.next = p.next
+            p.next = new
+        return dummy.next
+		
+这个解法牛逼的地方在于，普通的插入排序是从后往前遍历，而这个是从前往后遍历，因为链表只能从前往后遍历。

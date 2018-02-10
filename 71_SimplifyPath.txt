@@ -1,0 +1,17 @@
+class Solution:
+    def simplifyPath(self, path):
+        """
+        :type path: str
+        :rtype: str
+        """
+        pl = re.split('\/+', path)
+        pl = pl[1:] if pl[-1] != '' else pl[1:-1]
+        stack = []
+        for s in pl:
+            if s in '..':
+                print(s,len(stack))
+                if s == '..' and len(stack):
+                    stack.pop()
+            else:
+                stack.append(s)
+        return '/' + '/'.join(stack)

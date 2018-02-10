@@ -1,0 +1,31 @@
+class Solution(object):
+    def reorderList(self, head):
+        """
+        :type head: ListNode
+        :rtype: void Do not return anything, modify head in-place instead.
+        """
+        if head is None or head.next is None:
+            return
+        r = l = dummy = ListNode(0)  # actually dummy head is unnecessary
+        dummy.next=head
+        while r.next and r.next.next:
+            l = l.next
+            r = r.next.next
+        l2 = l.next
+        l.next=None
+        l = dummy.next
+        pre = None
+        while l2:
+            nxt = l2.next
+            l2.next = pre
+            pre = l2
+            l2 = nxt
+        l2=pre
+        while l.next:
+            nxt=l.next
+            nxt2=l2.next
+            l.next=l2
+            l=nxt
+            l2.next=l
+            l2=nxt2
+        l.next=l2

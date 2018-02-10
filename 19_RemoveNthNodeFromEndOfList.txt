@@ -1,0 +1,19 @@
+class Solution(object):
+    def removeNthFromEnd(self, head, n):
+        """
+        :type head: ListNode
+        :type n: int
+        :rtype: ListNode
+        """
+        dummy=ListNode(0)
+        dummy.next=head
+        l=r=dummy
+        for i in range(n+1):
+            r=r.next
+        while r:
+            l=l.next
+            r=r.next
+        l.next=l.next.next
+        return dummy.next
+如果不知道什么时候该用dummyhead的话，那么记住一点：如果要删掉某个节点，就一定要设置dummyhead
+因为删掉节点需要访问该节点之前的节点。

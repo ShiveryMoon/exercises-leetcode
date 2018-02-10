@@ -1,0 +1,19 @@
+递归版：
+class Solution:
+    def inorderTraversal(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
+        l=[]
+        self._helper(root,l)
+        return l
+    
+    def _helper(self,root,l):
+        if root:
+            self._helper(root.left,l)
+            l.append(root.val)
+            self._helper(root.right,l)
+			
+			
+用栈模拟系统递归高级版：
