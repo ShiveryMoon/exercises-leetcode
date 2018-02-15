@@ -1,0 +1,18 @@
+class Solution:
+    def binaryTreePaths(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[str]
+        """
+        rl=[]
+        rs=''
+        self.helper(root,rs,rl)
+        return rl
+    
+    def helper(self,root,rs,rl):
+        if root:
+            xrs=rs+'->%s' % root.val
+            if not root.left and not root.right:
+                rl.append(xrs[2:])
+            self.helper(root.left,xrs,rl)
+            self.helper(root.right,xrs,rl)
