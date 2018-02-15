@@ -16,3 +16,31 @@ class Solution:
             self._helper(root.right,l)
 			
 用栈模拟系统递归高级版：
+class Command:
+    def __init__(self,command,node):
+        self.command=command
+        self.node=node
+
+class Solution:
+    def preorderTraversal(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
+        rl=[]
+        if root is None:
+            return rl
+        stack=[]
+        stack.append(Command('go',root))
+        while len(stack)>0:
+            com=stack.pop()
+            node=com.node
+            if com.command=='print':
+                rl.append(node.val)
+            else:
+                if node.right:
+                    stack.append(Command('go',node.right))
+                if node.left:
+                    stack.append(Command('go',node.left))
+                stack.append(Command('print',node))
+        return rl
