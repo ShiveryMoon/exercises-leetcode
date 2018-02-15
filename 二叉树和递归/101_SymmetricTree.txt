@@ -1,0 +1,59 @@
+递归
+class Solution:
+    def isSymmetric(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        if root is None:
+            return True
+        ll=[]
+        lr=[]
+        self._order1(root.left,ll)
+        self._order2(root.right,lr)
+        return ll==lr
+    
+    def _order1(self,root,l):
+        if root:
+            l.append(root.val)
+            self._order1(root.left,l)
+            self._order1(root.right,l)
+        else:
+            l.append(None)
+            
+    def _order2(self,root,l):
+        if root:
+            l.append(root.val)
+            self._order2(root.right,l)
+            self._order2(root.left,l)
+        else:
+            l.append(None)
+			
+迭代			
+class Solution:
+    def isSymmetric(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        if root is None:
+            return True
+        queue=[(root,0)]
+        rl=[]
+        while queue:
+            cur,level=queue.pop()
+            if len(rl)==level:
+                rl.append([])
+            if cur:
+                rl[level].append(cur.val)
+                queue.insert(0,(cur.left,level+1))
+                queue.insert(0,(cur.right,level+1))
+            else:
+                rl[level].append(None)
+        print(rl)
+        reverserl=[]
+        for l in rl:
+            xl=l[:]
+            xl.reverse()
+            reverserl.append(xl)
+        return rl==reverserl

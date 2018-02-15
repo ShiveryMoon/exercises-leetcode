@@ -1,0 +1,29 @@
+class Solution(object):
+    def numSquares(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        queue=[]
+        visited=[False]*(n+1)
+        queue.insert(0,(n,0))
+        visited[n]=True
+        while queue:
+            num=queue.pop()
+            i=1
+            while True:
+                a=num[0]-i*i
+                if a<0:
+                    break
+                if a==0:
+                    return num[1]+1
+                if not visited[a]:
+                    queue.insert(0,(a,num[1]+1))
+                    visited[a]=True
+                i+=1
+				
+这题值得多思考，虽然我现在做出来了，但是感觉过几天又会忘掉。。
+它这棵树的每个节点就是一个tuple。整棵树其实就是正整数集，是一颗天然的已经创建好的树。
+这是单源最短路径算法，牢记这一点，这样在遍历的时候你才能看懂，为什么每个点只访问一次的情况下，对于其他点来说是公平的
+因为我们找的又不是其他点的最短路径，管他们干什么。
+广度优先遍历就是找到所有可能，再给所有可能找他们的所有可能。

@@ -1,0 +1,48 @@
+class Solution:
+    def isBalanced(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        if root is None:
+            return True
+        else:
+            lh=self.getHeight(root.left)
+            rh=self.getHeight(root.right)
+            return abs(lh-rh)<=1 and self.isBalanced(root.left) and self.isBalanced(root.right)
+    
+    def getHeight(self,root):
+        if root is None:
+            return 0
+        return 1+max(self.getHeight(root.left),self.getHeight(root.right))
+		
+class Solution:
+    def isBalanced(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        return self._dfs(root)!=-1
+    
+    def _dfs(self,root):
+        if root is None:
+            return 0
+        lh=self._dfs(root.left)
+        if lh==-1:
+            return -1
+        rh=self._dfs(root.right)
+        if rh==-1:
+            return -1
+        if abs(lh-rh)>1:
+            return -1
+        else:
+            return 1+max(lh,rh)
+			
+第一个方法是Onlogn的，第二个方法是On的
+其实第一个方法我没想写出来的，因为明摆着重复计算了每个节点的高度。
+至于为什么是Onlogn？虽然看起来给每个节点都调用了一遍getHeight，
+但是，并不是每个点调用getHeight就遍历了n个点，而是每层的所有点调用的getHeight才是遍历了N个点
+然后，层数是logn，所以。
+第二个方法其实很简单。。。我他妈的怎么就没想明白这是个后序遍历呢？
+只要算了左节点高度，再算出右节点高度，然后做计算就行了。这是一个典型的后序遍历。
+注意，一旦有一个-1，就要把-1一直送回去。break可以跳出循环，可是没有什么操作可以跳出递归，所以一定要把-1送回去。

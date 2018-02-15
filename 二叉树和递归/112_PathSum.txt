@@ -1,0 +1,18 @@
+class Solution:
+    def hasPathSum(self, root, sum):
+        """
+        :type root: TreeNode
+        :type sum: int
+        :rtype: bool
+        """
+        if root is None:
+            return False
+        if root.val==sum and not root.left and not root.right:
+            return True
+        return self.hasPathSum(root.left,sum-root.val) or self.hasPathSum(root.right,sum-root.val)
+		
+这道题我卡在了，我不知道是return int还是return bool
+事实上，int可以从函数参数传递，直接return布尔值就行了
+注意这个sum参数的传递也是符合递归的。。。我要求root的haspath(sum)，就是要求root.left的haspath(sum-root.left.val)
+这是一个完全可以复用的函数，对于任何一层调用来说，逻辑上都是讲得通的
+我们使用了or，这样可以达到一个效果：整个递归过程只要有一个True，就会返回True

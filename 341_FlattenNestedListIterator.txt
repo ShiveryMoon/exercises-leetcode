@@ -1,0 +1,31 @@
+class NestedIterator(object):
+
+    def __init__(self, nestedList):
+        """
+        Initialize your data structure here.
+        :type nestedList: List[NestedInteger]
+        """
+        self.stack=nestedList[::-1]
+
+    def next(self):
+        """
+        :rtype: int
+        """
+        return self.stack.pop().getInteger()
+
+    def hasNext(self):
+        """
+        :rtype: bool
+        """
+        while self.stack:
+            top = self.stack[-1]#这里不可以pop。如果top是一个list，pop没问题，但如果top是int，那就把int给pop出去了，next函数就没得pop了
+            if top.isInteger():
+                return True
+            self.stack = self.stack[:-1] + top.getList()[::-1]#这一行就是把nestedlist拆开然后反着怼到栈顶。
+        return False
+		
+这题很麻烦，因为，[[]]也算是有元素，这个元素是[]
+对于[[]]，hasNext是false，但对于[[],1]，hasNext是True。
+所以整个逻辑需要在hasNext里面完成，准备好一个整数在栈顶。
+24行有一个隐藏作用，就是删除元素，因为[1]+[]==[1]，就删除了空列表。
+这真的好蠢。

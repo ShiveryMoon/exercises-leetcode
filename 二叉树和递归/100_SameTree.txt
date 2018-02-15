@@ -1,0 +1,20 @@
+class Solution:
+    def isSameTree(self, p, q):
+        """
+        :type p: TreeNode
+        :type q: TreeNode
+        :rtype: bool
+        """
+        lp=[]
+        lq=[]
+        self._preorder(p,lp)
+        self._preorder(q,lq)
+        return lp==lq
+    
+    def _preorder(self,root,l):
+        if root:
+            l.append(root.val)
+            self._preorder(root.left,l)
+            self._preorder(root.right,l)
+        else:
+            l.append(None)

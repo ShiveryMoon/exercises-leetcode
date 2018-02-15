@@ -1,0 +1,16 @@
+class Solution:
+    def sumOfLeftLeaves(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        return self.helper(root,0,False)
+        
+    def helper(self,root,s,isLeft):
+        if root is None:
+            return 0
+        if not root.left and not root.right and isLeft:
+            return root.val
+        sl=self.helper(root.left,s,True)
+        sr=self.helper(root.right,s,False)
+        return sl+sr

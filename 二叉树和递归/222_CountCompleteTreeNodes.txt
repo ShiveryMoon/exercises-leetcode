@@ -1,0 +1,28 @@
+class Solution:
+    def countNodes(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        if root is None:
+            return 0
+        leftheight=self.getHeight(root.left)
+        rightheight=self.getHeight(root.right)
+        if leftheight==rightheight:
+            return pow(2,leftheight)+self.countNodes(root.right)
+        else:
+            return pow(2,rightheight)+self.countNodes(root.left)
+        
+    def getHeight(self,root):
+        if root is None:
+            return 0
+        return 1+self.getHeight(root.left)
+		
+其实算任何一个二叉树的节点数量都是On
+但是这道题可以使用完全二叉树的性质构建一个(Ologn)^2的算法
+
+由于是完全二叉树，所以我们算树的高度只需要一路查找左子节点，这是Ologn
+分别查找左子树和右子树的高度：
+1.如果左子树的高度等于右子树的高度，说明左子树是一颗满二叉树，那么整棵树的高度2^leftheight-1+1(root)+右子树的节点数
+2.如果左子树的高度大于右子树的高度，说明右子树是一颗满二叉树，那么整棵树的高度2^rightheight-1+1(root)+左子树的节点数
+这个过程是Ologn，因为每次我们直接算出了一半的树的高度，然后对另一半继续处理。

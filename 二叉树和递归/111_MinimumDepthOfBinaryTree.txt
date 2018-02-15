@@ -1,0 +1,42 @@
+class Solution:
+    def minDepth(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        if root is None:
+            return 0
+        d=list(map(self.minDepth,(root.left,root.right)))
+        return 1+(min(d) or max(d))
+		
+#注意审题：根节点到最近的叶子节点的高度
+而空节点并不算叶子节点
+如果你调用minDepth(root)得到一个高度：0，说明这个root是空节点，
+那这个高度0就不能用，只是因为空节点不是叶子节点
+如果题目是根节点到最近空节点的高度，那么把104题的max改成min就好了。
+第十行，先调用min再调用max，这个逻辑是这样的：
+如果min返回的不是0，说明d有两个孩子，不需要考虑空孩子的问题
+如果min返回了0，说明d至少有一个空孩子，那么这个空孩子是不能算的，所以要返回另一个孩子(即max)
+
+上面那个函数，重点在递归过程
+下面这个函数，重点在递归结束条件
+
+class Solution:
+    def minDepth(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        if root is None:#只有在最开始的时候传入空树才会触发这个判断。如果确定题目不会传入空树就不要这个判断了。
+            return 0
+        if not root.left and not root.right:
+            return 1
+        lv=rv=sys.maxsize #能到这里的至少有一个孩子
+        if root.left:
+            lv=self.minDepth(root.left)
+        if root.right:
+            rv=self.minDepth(root.right)
+        return 1+min(lv,rv)#所以min一定不会返回一个maxsize
+		
+在任何时候都不会调用minDepth的时候传入(None)，除非一开始就给空树。
+这就是这个函数的聪明之处。
