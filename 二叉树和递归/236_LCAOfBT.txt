@@ -1,0 +1,23 @@
+class Solution(object):
+    def lowestCommonAncestor(self, root, p, q):
+        """
+        :type root: TreeNode
+        :type p: TreeNode
+        :type q: TreeNode
+        :rtype: TreeNode
+        """
+        if root in (None, p, q): 
+            return root  #其实可以把这一行想象成布尔值。如果root是None就返回false，否则返回true
+        left=self.lowestCommonAncestor(root.left, p, q)
+        right=self.lowestCommonAncestor(root.right, p, q)
+        return root if left and right else left or right
+		
+这题挺难的，代码异常的简单，但是想通却有点难。
+LCA问题其实就是在找能将两个节点分到左右两边的那个节点(包括自己)
+仔细想想就能明白，这个节点是唯一的
+所以，分别在左右子树中查找p or q这个逻辑
+如果左右子树中p or q这个逻辑都是true，那么当前root就是所要找的
+否则，说明p和q都在一颗子树中，只返回左或者右。当然了，如果左右都是none就返回none
+
+最后一行有个小逻辑：如果在哪一层中触发了left and right逻辑，那么这之后往上的递归全都只会触发left or right逻辑
+这样，我们找到的LCA就会一路往上。

@@ -1,0 +1,12 @@
+class Solution(object):
+    def isValidBST(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        return self.helper(root,-sys.maxsize,sys.maxsize)
+        
+    def helper(self,root,mi,ma):
+        if root is None:
+            return True
+        return mi<root.val and root.val<ma and self.helper(root.left,mi,root.val) and self.helper(root.right,root.val,ma)

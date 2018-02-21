@@ -1,0 +1,36 @@
+class Solution:
+    def sortedArrayToBST(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: TreeNode
+        """
+        return self.helper(nums,0,len(nums)-1)
+    
+    def helper(self,nums,first,last):
+        if last>=first:
+            mid=last-first+1
+            if mid%2==0:
+                mid=first+mid//2
+            else:
+                mid=first+(mid-1)//2
+            m=TreeNode(nums[mid])
+            left=self.helper(nums,first,mid-1)
+            m.left=left
+            right=self.helper(nums,mid+1,last)
+            m.right=right
+            return m
+
+
+第11到15行可以换成mid=first+(last-first)//2
+
+			
+区别如下
+对于[-10,-3,0,5,9]
+第一种方案得出：
+     0
+  -3   9
+-10   5
+第二种方案得出：
+     0
+  -10   5
+    -3    9

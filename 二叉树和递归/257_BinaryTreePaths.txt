@@ -11,7 +11,7 @@ class Solution:
     
     def helper(self,root,rs,rl):
         if root:
-            xrs=rs+'->%s' % root.val
+            xrs=rs+'->%s' % root.val #这一步必须保证是新创建对象，这个xrs好像可以直接写成rs
             if not root.left and not root.right:
                 rl.append(xrs[2:])
             self.helper(root.left,xrs,rl)

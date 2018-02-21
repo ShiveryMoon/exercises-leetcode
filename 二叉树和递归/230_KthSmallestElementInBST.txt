@@ -1,0 +1,18 @@
+class Solution:
+    def kthSmallest(self, root, k):
+        """
+        :type root: TreeNode
+        :type k: int
+        :rtype: int
+        """
+        count,l=[1],[]
+        self.helper(root,count,k,l)
+        return l[0]
+    
+    def helper(self,root,count,k,l):
+        if root:
+            a=self.helper(root.left,count,k,l)
+            if count[0]==k:
+                l.append(root.val)
+            count[0]+=1
+            b=self.helper(root.right,count,k,l)
