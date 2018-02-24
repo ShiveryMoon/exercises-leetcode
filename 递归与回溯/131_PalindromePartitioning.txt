@@ -1,0 +1,21 @@
+class Solution:
+    def partition(self, s):
+        """
+        :type s: str
+        :rtype: List[List[str]]
+        """
+        rl=[]
+        self.backTracking(s,0,[],rl)
+        return rl
+    
+    def backTracking(self,s,index,tl,rl):
+        if ''.join(tl)==s:
+            rl.append(tl)
+            return True
+        string=''
+        while index<len(s):
+            string+=s[index]
+            index+=1
+            if string[::-1]==string: #这才是求反字符串的好方法，别用递归那个。。加号要人命的
+                sl=tl+[string] #create new list object
+                self.backTracking(s,index,sl,rl)

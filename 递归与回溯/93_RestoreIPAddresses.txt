@@ -1,0 +1,23 @@
+class Solution:
+    def restoreIpAddresses(self, s):
+        """
+        :type s: str
+        :rtype: List[str]
+        """
+        rl=[]
+        self.findCombination(s,0,'',0,rl)
+        return rl
+    
+    def findCombination(self,s,index,result,dotNum,rl):
+        if len(result)==(len(s)+4):
+            result=result.rstrip('.')
+            rl.append(result)
+            return True
+        if dotNum==4: return True
+        string=''
+        while index<len(s) and len(string)<3:
+            if string=='0': break
+            string+=s[index]
+            index+=1
+            if int(string)>255: break
+            self.findCombination(s,index,result+string+'.',dotNum+1,rl)

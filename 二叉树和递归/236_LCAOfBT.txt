@@ -7,7 +7,7 @@ class Solution(object):
         :rtype: TreeNode
         """
         if root in (None, p, q): 
-            return root  #其实可以把这一行想象成布尔值。如果root是None就返回false，否则返回true
+            return root  #其实可以把这一行想象成布尔值。如果root是None就返回false，否则返回true，并且true只返回一次。
         left=self.lowestCommonAncestor(root.left, p, q)
         right=self.lowestCommonAncestor(root.right, p, q)
         return root if left and right else left or right
