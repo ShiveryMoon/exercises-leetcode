@@ -1,0 +1,18 @@
+class Solution:
+    def permute(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        rl=[]
+        self.backTracking(nums,[],rl)
+        return rl
+    
+    def backTracking(self,nums,tl,rl):
+        if len(nums)==0:
+            rl.append(tl)
+            return True
+        for i,num in enumerate(nums):
+            sl=tl+[num]
+            self.backTracking(nums[:i]+nums[i+1:],sl,rl)
+什么破题一点难度也没有

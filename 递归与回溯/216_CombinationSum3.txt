@@ -1,0 +1,22 @@
+class Solution:
+    def combinationSum3(self, k, n):
+        """
+        :type k: int
+        :type n: int
+        :rtype: List[List[int]]
+        """
+        l=list(range(1,10))
+        rl=[]
+        self.backTracking(l,k,n,0,[],0,rl)
+        return rl
+    
+    def backTracking(self,l,k,n,index,tl,sums,rl):
+        if len(tl)==k and sums==n:
+            rl.append(tl)
+            return True
+        while index<len(l):
+            newSums=sums+l[index]
+            if newSums<=n and len(tl)<k:
+                sl=tl+[l[index]]
+                self.backTracking(l,k,n,index+1,sl,newSums,rl)
+            index+=1

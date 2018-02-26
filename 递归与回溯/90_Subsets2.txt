@@ -1,0 +1,19 @@
+class Solution:
+    def subsetsWithDup(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        nums.sort()
+        rl=[]
+        self.backTracking(nums,0,[],rl)
+        return rl
+    
+    def backTracking(self,nums,index,tl,rl):
+        rl.append(tl)
+        while index<len(nums):
+            sl=tl+[nums[index]]
+            index+=1
+            self.backTracking(nums,index,sl,rl)
+            while index<len(nums) and nums[index-1]==nums[index]:
+                index+=1

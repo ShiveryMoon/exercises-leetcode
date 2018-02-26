@@ -1,0 +1,24 @@
+class Solution:
+    def combinationSum(self, candidates, target):
+        """
+        :type candidates: List[int]
+        :type target: int
+        :rtype: List[List[int]]
+        """
+        rl=[]
+        self.backtracking(candidates,target,[],0,rl)
+        return rl
+    
+    def backtracking(self,candidates,target,tl,sums,rl):
+        if sums==target:
+            rl.append(tl)
+            return True
+        for i,num in enumerate(candidates):
+            newSums=sums+num
+            if newSums<=target:
+                sl=tl+[num]
+                self.backtracking(candidates[i:],target,sl,newSums,rl)
+看到combination，你就得知道，每次回溯都要把已经用过的元素剔除出去，如这里最后一行的candidates[i:]，注意不是i+1，因为当前元素可以重复使用。
+我一开始忘了[i:]，导致出现重复解。其实简单的要死，这是个组合问题呀，candidates里不要出现(除了当前元素以外的)用过的元素就好了
+我知道我被误导的地方，那就是，元素可以重复使用。
+就这一点，导致我卡住了。。。

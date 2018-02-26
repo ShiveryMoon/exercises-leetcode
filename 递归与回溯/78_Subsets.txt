@@ -1,0 +1,16 @@
+class Solution:
+    def subsets(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        rl=[]
+        self.backTracking(nums,0,[],rl)
+        return rl
+    
+    def backTracking(self,nums,index,tl,rl):
+        rl.append(tl)
+        while index<len(nums):
+            sl=tl+[nums[index]]
+            index+=1
+            self.backTracking(nums,index,sl,rl)

@@ -1,0 +1,25 @@
+class Solution:
+    def combine(self, n, k):
+        """
+        :type n: int
+        :type k: int
+        :rtype: List[List[int]]
+        """
+        l=list(range(1,n+1))
+        rl=[]
+        self.backTracking(l,k,0,[],rl)
+        return rl
+        
+    def backTracking(self,l,k,index,tl,rl):
+        if len(tl)==k:
+            rl.append(tl)
+            return True
+        while len(l)-index>=k-len(tl):
+            sl=tl+[l[index]]
+            index+=1
+            self.backTracking(l,k,index,sl,rl)
+			
+			
+第17行：
+只要l中剩下的未遍历到的数据个数，大于等于tl仍所需的数字个数，循环就继续。
+不能说我tl差3个数才满k，然而l里只剩下两个数未遍历，这种情况我仍要调用backtracking吧。
