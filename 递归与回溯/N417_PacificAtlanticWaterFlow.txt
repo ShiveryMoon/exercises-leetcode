@@ -1,0 +1,52 @@
+class Solution:
+    def pacificAtlantic(self, matrix):
+        """
+        :type matrix: List[List[int]]
+        :rtype: List[List[int]]
+        """
+        rl=[]
+        m=len(matrix)
+        if m==0:
+            return rl
+        n=len(matrix[0])
+        ds=[[-1,0],[0,-1],[1,0],[0,1]]
+        status=[[False for x in range(n)] for y in range(m)]
+        status[m-1][0]=status[0][n-1]=True
+        visited=[[0 for x in range(n)] for y in range(m)]
+        times=0
+        for i in range(m):
+            for j in range(n):
+                times+=1
+                td={'Pacific':False,'Atlantic':False}
+                self.dfs(matrix,m,n,ds,status,visited,times,i,j,td)
+                if td['Pacific'] and td['Atlantic']:
+                    status[i][j]=True
+                    rl.append([i,j])
+        return rl
+    
+    def inPacific(self,x,y):
+        return x==-1 or y==-1
+    
+    def inAtlantic(self,x,y,m,n):
+        return x==m or y==n
+    
+    def dfs(self,matrix,m,n,ds,status,visited,times,startx,starty,td):
+        visited[startx][starty]=times
+        if status[startx][starty]==True:
+            td['Pacific']=td['Atlantic']=True
+            return True
+        for i in range(4): #能到这里说明这个点没查过
+            if td['Pacific'] and td['Atlantic']:
+                break
+            newx=startx+ds[i][0]
+            newy=starty+ds[i][1]
+            if self.inPacific(newx,newy):
+                td['Pacific']=True
+                continue
+            if self.inAtlantic(newx,newy,m,n):
+                td['Atlantic']=True
+                continue
+            if matrix[newx][newy]<=matrix[startx][starty] and visited[newx][newy]!=times:
+                self.dfs(matrix,m,n,ds,status,visited,times,newx,newy,td)
+				
+106/113 pass

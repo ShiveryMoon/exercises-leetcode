@@ -1,0 +1,32 @@
+记忆化搜索：
+class Solution:
+    def climbStairs(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        memo=[-1]*(n+1)
+        return self.memoSearch(n,memo)
+    
+    def memoSearch(self,n,memo):
+        if n==0 or n==1:
+            return 1
+        if memo[n]==-1:
+            memo[n]=self.memoSearch(n-1,memo)+self.memoSearch(n-2,memo)
+        return memo[n]
+		
+动态规划：
+class Solution:
+    def climbStairs(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        memo=[0]*(n+1)
+        memo[0]=1
+        memo[1]=1
+        for i in range(2,n+1):
+            memo[i]=memo[i-1]+memo[i-2]
+        return memo[n]
+		
+至少现在看来，动态规划挺简单的，而且很有意思，感觉是在模仿人的思维方式。

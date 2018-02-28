@@ -1,0 +1,72 @@
+class Solution:
+    def solveNQueens(self, n):
+        """
+        :type n: int
+        :rtype: List[List[str]]
+        """
+        rl=[]
+        col=[False]*n
+        dia1=[False]*(2*n-1)
+        dia2=[False]*(2*n-1)
+        row=[]
+        self.putQueen(n,col,dia1,dia2,rl,0,row)
+        return rl
+        
+    def putQueen(self,n,col,dia1,dia2,rl,index,row):
+        if index==n:
+            rl.append(self.generateBoard(n,row))
+            return True
+        for i in range(n):
+            if not col[i] and not dia1[index+i] and not dia2[index-i+n-1]:
+                row.append(i)
+                col[i]=True
+                dia1[index+i]=True
+                dia2[index-i+n-1]=True
+                self.putQueen(n,col,dia1,dia2,rl,index+1,row)
+                row.pop()
+                col[i]=False
+                dia1[index+i]=False
+                dia2[index-i+n-1]=False
+                
+    def generateBoard(self,n,row):
+        l=[]
+        for pos in row:
+            l.append('.'*pos+'Q'+'.'*(n-1-pos))
+        return l
+		
+类内对象版本，慢了30%。。。。	
+class Solution:
+    def solveNQueens(self, n):
+        """
+        :type n: int
+        :rtype: List[List[str]]
+        """
+        self.rl=[]
+        self.col=[False]*n
+        self.dia1=[False]*(2*n-1)
+        self.dia2=[False]*(2*n-1)
+        self.row=[]
+        self.putQueen(n,0)
+        return self.rl
+        
+    def putQueen(self,n,index):
+        if index==n:
+            self.rl.append(self.generateBoard(n))
+            return True
+        for i in range(n):
+            if not self.col[i] and not self.dia1[index+i] and not self.dia2[index-i+n-1]:
+                self.row.append(i)
+                self.col[i]=True
+                self.dia1[index+i]=True
+                self.dia2[index-i+n-1]=True
+                self.putQueen(n,index+1)
+                self.row.pop()
+                self.col[i]=False
+                self.dia1[index+i]=False
+                self.dia2[index-i+n-1]=False
+                
+    def generateBoard(self,n):
+        l=[]
+        for pos in self.row:
+            l.append('.'*pos+'Q'+'.'*(n-1-pos))
+        return l

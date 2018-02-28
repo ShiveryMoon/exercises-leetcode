@@ -1,0 +1,39 @@
+记忆化搜索：
+class Solution:
+    def minPathSum(self, grid):
+        """
+        :type grid: List[List[int]]
+        :rtype: int
+        """
+        memo=[[-1 for x in range(len(grid[0]))] for y in range(len(grid))]
+        memo[-1][-1]=grid[-1][-1]
+        return self.memoSearch(grid,memo,0,0)
+    
+    def memoSearch(self,grid,memo,x,y):
+        if memo[x][y]==-1:
+            if x+1==len(grid):
+                memo[x][y]=self.memoSearch(grid,memo,x,y+1)+grid[x][y]
+            elif y+1==len(grid[0]):
+                memo[x][y]=self.memoSearch(grid,memo,x+1,y)+grid[x][y]
+            else:
+                memo[x][y]=min(self.memoSearch(grid,memo,x+1,y),self.memoSearch(grid,memo,x,y+1))+grid[x][y]
+        return memo[x][y]
+		
+动态规划：
+class Solution:
+    def minPathSum(self, grid):
+        """
+        :type grid: List[List[int]]
+        :rtype: int
+        """
+        for i in range(len(grid)-1,-1,-1):
+            for j in range(len(grid[0])-1,-1,-1):
+                if i==len(grid)-1 and j==len(grid[0])-1:
+                    continue
+                if i==len(grid)-1:
+                    grid[i][j]+=grid[i][j+1]
+                elif j==len(grid[0])-1:
+                    grid[i][j]+=grid[i+1][j]
+                else:
+                    grid[i][j]+=min(grid[i+1][j],grid[i][j+1])
+        return grid[0][0]

@@ -1,0 +1,33 @@
+class Solution:
+    def exist(self, board, word):
+        """
+        :type board: List[List[str]]
+        :type word: str
+        :rtype: bool
+        """
+        directions=[[-1,0],[0,1],[1,0],[0,-1]]
+        m=len(board)
+        n=len(board[0])
+        visited=[[False for x in range(n)] for y in range(m)]
+        for i in range(m):
+            for j in range(n):
+                if self.searchWord(board,word,directions,m,n,visited,0,i,j):
+                    return True
+        return False
+    
+    def inArea(self,x,y,m,n):
+        return x>=0 and x<m and y>=0 and y<n
+    
+    def searchWord(self,board,word,directions,m,n,visited,index,startx,starty):
+        if index==len(word)-1:
+            return board[startx][starty]==word[index]
+        if board[startx][starty]==word[index]:
+            visited[startx][starty]=True
+            for i in range(4):
+                newx=startx+directions[i][0]
+                newy=starty+directions[i][1]
+                if self.inArea(newx,newy,m,n) and not visited[newx][newy]:
+                    if self.searchWord(board,word,directions,m,n,visited,index+1,newx,newy):
+                        return True
+            visited[startx][starty]=False
+        return False

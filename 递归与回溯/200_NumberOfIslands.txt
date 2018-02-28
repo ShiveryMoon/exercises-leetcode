@@ -1,0 +1,30 @@
+class Solution:
+    def numIslands(self, grid):
+        """
+        :type grid: List[List[str]]
+        :rtype: int
+        """
+        m=len(grid)
+        if m==0:
+            return 0
+        n=len(grid[0])
+        ds=[[-1,0],[0,1],[1,0],[0,-1]]
+        visited=[[False for x in range(n)] for y in range(m)]
+        ri=0
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j]=='1' and not visited[i][j]:
+                    ri+=1
+                    self.floodfill(grid,m,n,ds,visited,i,j)
+        return ri
+    
+    def inArea(self,x,y,m,n):
+        return x>=0 and y>=0 and x<m and y<n
+    
+    def floodfill(self,grid,m,n,ds,visited,startx,starty):
+		visited[startx][starty]=True
+        for i in range(4):
+            newx=startx+ds[i][0]
+            newy=starty+ds[i][1]
+            if self.inArea(newx,newy,m,n) and grid[newx][newy]=='1' and not visited[newx][newy]:
+                self.floodfill(grid,m,n,ds,visited,newx,newy)

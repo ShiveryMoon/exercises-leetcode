@@ -1,0 +1,54 @@
+class Solution:
+    def solveSudoku(self, board):
+        """
+        :type board: List[List[str]]
+        :rtype: void Do not return anything, modify board in-place instead.
+        """
+        self.board=board
+        self.solve()
+        
+    def findUnassigned(self):
+        for row in range(9):
+            for col in range(9):
+                if self.board[row][col]=='.':
+                    return row,col
+        return -1,-1
+    
+    def solve(self):
+        row,col=self.findUnassigned()
+        if row==-1 and col==-1:
+            return True
+        for num in ['1','2','3','4','5','6','7','8','9']:
+            if self.safe(row,col,num):
+                self.board[row][col]=num
+                if self.solve():
+                    return True
+                self.board[row][col]='.'
+        return False
+    
+    def safe(self,row,col,num):
+        boxrow=row-row%3
+        boxcol=col-col%3
+        return self.checkrow(row,num) and self.checkcol(col,num) and self.checkbox(boxrow,boxcol,num)
+    
+    def checkrow(self,row,num):
+        for i in range(9):
+            if self.board[row][i]==num:
+                return False
+        return True
+    
+    def checkcol(self,col,num):
+        for i in range(9):
+            if self.board[i][col]==num:
+                return False
+        return True
+    
+    def checkbox(self,row,col,num):
+        for i in range(row,row+3):
+            for j in range(col,col+3):
+                if self.board[i][j]==num:
+                    return False
+        return True
+        
+非常标准的回溯解法，毫无优化。。。
+不过这题就这样吧，以后有机会再来琢磨
