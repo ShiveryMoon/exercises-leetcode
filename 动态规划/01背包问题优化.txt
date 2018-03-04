@@ -18,7 +18,10 @@ def knapsack01(w, v, C):
         memo[c]=0 if c<w[0] else v[0]
     for i in range(1,len(w)):
         for c in range(C,-1,-1):#倒着来更新
-            if c>=w[i]:
+            if c>=w[i]:#这个if可以直接写进for循环里
                 memo[c]=max(memo[c],v[i]+memo[c-w[i]])
     return memo[-1]
 这个一维列表解法的状态转移方程为f[c]=max(f[c],f[c-w[i]]+v[i])
+有些背包问题和这里一样，其实不需要1718行的初始化
+但这不是一个规律，而是具体情况具体分析。
+总之还是坚持初始化吧，反正不会有错，如果做完了发现不需要初始化也行，那个时候再考虑删掉。

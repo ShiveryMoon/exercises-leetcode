@@ -1,0 +1,24 @@
+class Solution:
+    def wordBreak(self, s, wordDict):
+        """
+        :type s: str
+        :type wordDict: List[str]
+        :rtype: bool
+        """
+        memo=[False for i in range(len(s)+1)]
+        memo[0]=True
+        lengthSet=set()
+        for word in wordDict:
+            lengthSet.add(len(word))
+        for i in range(1,len(s)+1):
+            for l in lengthSet:
+                if l<=i:#这只是一个普通的if
+					if s[i-l:i] in wordDict and memo[i-l]:#这里才是两个重要的状态转移条件
+						memo[i]=True
+						break
+        return memo[-1]
+		
+我在做这道题的时候其实没把它当背包问题来考虑。。
+不过这道题也确实算是一个完全背包+排列的问题
+状态定义F(i,N):考虑从所有N个str中是否有一种排列可以组成s[0:i+1]这个字符串
+状态转移方程：不太好写，总之就是第16行。

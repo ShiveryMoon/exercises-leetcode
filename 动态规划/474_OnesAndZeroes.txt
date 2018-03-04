@@ -1,0 +1,27 @@
+状态定义：F(n,i,j)考虑从[0....n]个数字串中取元素，在不超过i,j的情况下所能取到的最多的元素个数
+状态转移方程：F(n,i,j)=max(F(n-1,i,j),1+F(n-1,i-I[n],j-J[n]))
+class Solution:
+    def findMaxForm(self, strs, m, n):
+        """
+        :type strs: List[str]
+        :type m: int
+        :type n: int
+        :rtype: int
+        """
+        memo=[[0 for i in range(n+1)] for j in range(m+1)]
+        for s in strs:
+            numzeros=s.count('0')
+            numones=s.count('1')
+            for i in range(m,numzeros-1,-1):
+                for j in range(n,numones-1,-1):
+                    memo[i][j]=max(memo[i][j],1+memo[i-numzeros][j-numones])
+        return memo[-1][-1]
+		
+TLE at 61/63 tests
+		
+这道题一开始我没想好到底哪个是背包。其实我感觉以后可以这么想，固定不变的那个值就是背包。
+这公式带进去就莫名其妙做出来了，太尴尬了。
+终于有点高数的感觉了。我只想好好带公式，我不想了解具体细节。。。太恶心了。
+
+15 16行全倒序，因为这两个都是背包容量。
+这道题不需要对memo进行初始化，因为这只是个巧合。尽量对所有背包问题都进行初始化。

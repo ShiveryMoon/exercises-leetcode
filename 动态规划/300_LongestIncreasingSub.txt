@@ -1,0 +1,57 @@
+动态规划O(n^2):
+class Solution:
+    def lengthOfLIS(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        if len(nums)==0:
+            return 0
+        memo=[1 for i in range(len(nums))]
+        for i in range(1,len(nums)):
+            for j in range(i):
+                if nums[i]>nums[j]:
+                    memo[i]=max(memo[i],1+memo[j])
+        m=0
+        for i in memo:
+            m=max(i,m)
+        return m
+状态定义:F(i)在[0...i]的范围内，选择数字nums[i]可以获得的最长上升子序列的长度
+状态转移方程：F(i)=max(1+F(j) if nums[j]<nums[i])
+这类题目和背包问题的区别是什么?
+最显著的区别就是，在状态定义里我们没有“考虑”这两个字
+对于F(i)，nums[i]必须出现在子序列中
+而不是背包问题里的“子序列是[0...i]中的某些元素的组合，不一定有nums[i]”
+说实话，我觉得这题动态规划蛮简单的。下面那个算法才不好理解。
+
+
+O(nlogn)解法(二分搜索)：
+import bisect
+class Solution:
+    def lengthOfLIS(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        seq=[]
+        for num in nums:
+            index=bisect.bisect_left(seq,num)
+            if index==len(seq):
+                seq.append(num)
+            else:
+                seq[index]=num
+        return len(seq)
+		
+这个解法没有运用什么高深的思想，其实就用了一个技巧。else里是关键。
+首先，很容易看出来这个seq维持的是一个有序列表(并不是刻意为之)
+我们遍历nums，如果某一个num比seq里所有值都大，就append(找最大用的是二分搜索，所以是logn)
+如果某个num不是最大值，就替换掉seq里他的排名位置的那个元素
+而这个替换是精髓，bisect_left使得我们可以永远保持seq都是最小的元素
+比如[2,5,6]碰到一个4，就会变成[2,4,6]
+而我们要求的就是最长递增序列，如果seq里不保持最小的那种情况，就求不到最长递增序列。
+
+换个理解方式，其实39 40行，只是为了增大seq的长度，至于谁被append进去，并不重要。。
+因为我们在整个循环过程中要维持这个seq始终存储这一路上的每个元素最小的递增序列，即，在seq长度不变的情况下使得所有元素尽可能小
+这样，我们甚至还能求出最终的这个完整路径，而不只是一个值
+
+但是，二分搜索法貌似只能给出一种最长子序列，但事实上有多个这样的序列。而老师讲过，动态规划是可以求出所有的最长子序列的。
