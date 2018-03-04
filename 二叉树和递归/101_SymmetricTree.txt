@@ -29,7 +29,7 @@ class Solution:
         else:
             l.append(None)
 			
-迭代			
+迭代（层序遍历）
 class Solution:
     def isSymmetric(self, root):
         """

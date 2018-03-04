@@ -6,8 +6,8 @@ class Solution:
         :rtype: int
         """
         memo=[0]*(n+1)
-        self.memoSearch(n,memo)
-        return memo[n]
+		#memo[1]=1
+        return self.memoSearch(n,memo)
     
     def memoSearch(self,n,memo):
         if n==1:
@@ -16,6 +16,11 @@ class Solution:
             for i in range(1,n):
                 memo[n]=max(memo[n],max(i*(n-i),i*self.memoSearch(n-i,memo)))
         return memo[n]
+
+按照上面这个代码，算到最后的话，memo[1]=0，即“1没有被访问过”，因为访问1的时候直接return了，并没有memo[1]=1这个操作。
+其实这个无所谓，但如果你非要修复这个小bug，就用下面的方法：
+添加第九行的代码，并把1314行去掉。
+这个方法适用于所有记忆化搜索，其实很简单，只不过是换了个地方写递归结束条件而已。
 
 动态规划：
 class Solution:

@@ -1,0 +1,44 @@
+状态定义：考虑将n个数字加在一起能够填满sum为C的背包
+状态转移方程：F(i,c)=F(i-1,c)||F(i-1,c-w[i])
+
+记忆化搜索：
+class Solution:
+    def canPartition(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: bool
+        """
+        sums=sum(nums)
+        if sums%2==1:
+            return False
+        sums//=2
+        memo=[[-1 for x in range(sums+1)] for y in range(len(nums))]
+        return self.tryPartition(nums,len(nums)-1,memo,sums)
+    
+    def tryPartition(self,nums,index,memo,sums):
+        if index<0 or sums<0:
+            return False
+        if sums==0:
+            return True
+        if memo[index][sums]==-1:
+            memo[index][sums]=self.tryPartition(nums,index-1,memo,sums) or self.tryPartition(nums,index-1,memo,sums-nums[index])
+        return memo[index][sums]
+		
+动态规划：
+class Solution:
+    def canPartition(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: bool
+        """
+        sums=sum(nums)
+        if sums%2==1:
+            return False
+        C=sums//2
+        memo=[False for x in range(C+1)]
+        for c in range(C+1):
+            memo[c]=nums[0]==c
+        for i in range(1,len(nums)):
+            for c in range(C,nums[i]-1,-1):
+                memo[c]=memo[c] or memo[c-nums[i]]
+        return memo[-1]

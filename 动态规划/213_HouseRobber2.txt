@@ -1,0 +1,30 @@
+class Solution:
+    def rob(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        if not nums:
+            return 0
+        if len(nums)==1:
+            return nums[0]
+        return max(self.helper(nums[:-1]),self.helper(nums[1:]))
+        
+    def helper(self,nums):
+        memo=[-1 for x in range(len(nums))]
+        memo[-1]=nums[-1]
+        for i in range(len(nums)-2,-1,-1):
+            for j in range(i,i+2 if i+2<=len(nums) else len(nums)):
+                memo[i]=max(memo[i],nums[j]+(memo[j+2] if j+2<len(nums) else 0))
+        return memo[0]
+		
+这题如果我不看discuss/hints是绝对想不到的。。
+我们可以打破这个圈，让这道题退化成HouseRobber1
+分成以下两种情况：
+1.第一个房子到倒数第二个房子
+2.第二个房子到倒数第一个房子
+将这两个情况分别带入HouseRobber1，然后取最大值就好了。
+这其实是命题和逆否命题的关系
+描述1：第一个房子和最后一个房子不能一起取
+描述2：要么取第一个房子到倒数第二个房子，要么取第二个房子到倒数第一个房子
+这两个描述是等价的

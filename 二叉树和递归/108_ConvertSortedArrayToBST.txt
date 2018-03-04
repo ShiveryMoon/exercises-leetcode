@@ -14,10 +14,8 @@ class Solution:
             else:
                 mid=first+(mid-1)//2
             m=TreeNode(nums[mid])
-            left=self.helper(nums,first,mid-1)
-            m.left=left
-            right=self.helper(nums,mid+1,last)
-            m.right=right
+            m.left=self.helper(nums,first,mid-1)
+            m.right=self.helper(nums,mid+1,last)
             return m
 
 

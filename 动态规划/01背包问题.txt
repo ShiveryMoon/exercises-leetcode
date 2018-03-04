@@ -1,0 +1,30 @@
+这类问题的特点是，他需要二元的动态规划，体现在memo是个二维数组
+记忆化搜索：
+def knapsack01(w,v,C):
+	#memo[index][c]代表了编号为[0...index]的物品(从中挑选)，填充容积为c的背包的最大价值
+	memo=[[0 for i in range(C+1)] for j in range(len(w))]
+	return bestValue(w,v,len(w)-1,C,memo)
+	
+def bestValue(w,v,index,c,memo):
+	if index<0 or c<=0:
+		return 0
+	if memo[index][c]==0:
+		#对于每个特定的编号为index的物品，只有两种情况：拿或者不拿。二者选其大者。
+		memo[index][c]=max(bestValue(w,v,index-1,c,memo),v[index]+bestValue(w,v,index-1,c-w[index],memo))
+	return memo[index][c]
+		
+动态规划：
+def knapsack01(w,v,C):
+	# memo[index][c]代表了编号为[0...index]的物品(从中挑选)，填充容积为c的背包的最大价值
+	memo = [[0 for i in range(C + 1)] for j in range(len(w))]
+	for i in range(len(w)):
+		for c in range(C+1):
+			if i<0 or c<=0:
+				memo[i][c]=0
+			else:
+				memo[i][c]=max(memo[i-1][c],v[i]+memo[i-1][c-w[i]])
+	return memo[-1][-1]
+
+状态定义：F(i,c)考虑从[0...i]中拿东西放入容量为C的背包，使其价值最大
+状态转移：F(i,c)=max(F(i-1,c),v[i]+F(i-1,c-w[i]))
+这个初始版本的算法，时间复杂度是n*c，空间复杂度也是n*c

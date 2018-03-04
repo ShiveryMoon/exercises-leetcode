@@ -1,0 +1,24 @@
+将空间复杂度优化为O(2*C)
+def knapsack01(w, v, C):
+    memo = [[0 for i in range(C + 1)] for j in range(2)]
+    for c in range(C+1):
+        memo[0][c]=0 if c<w[0] else v[0]
+    for i in range(1,len(w)):
+        for c in range(C+1):
+            memo[i%2][c]=memo[(i-1)%2][c]
+            if c>=w[i]:
+                memo[i%2][c]=max(memo[i%2][c],v[i]+memo[(i-1)%2][c-w[i]])
+    return memo[(len(w)-1)%2][-1]
+注意这个技巧，直接往索引里填写i%2或者(i-2)%2
+	
+将空间复杂度优化为O(C)
+def knapsack01(w, v, C):
+    memo = [0 for i in range(C + 1)]
+    for c in range(C+1):
+        memo[c]=0 if c<w[0] else v[0]
+    for i in range(1,len(w)):
+        for c in range(C,-1,-1):#倒着来更新
+            if c>=w[i]:
+                memo[c]=max(memo[c],v[i]+memo[c-w[i]])
+    return memo[-1]
+这个一维列表解法的状态转移方程为f[c]=max(f[c],f[c-w[i]]+v[i])

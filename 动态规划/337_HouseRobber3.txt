@@ -1,0 +1,51 @@
+记忆化搜索
+class Solution:
+    def rob(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        memo={}
+        return self.tryRob(root,memo)
+    
+    def tryRob(self,root,memo):
+        if not root:
+            return 0
+        if root not in memo:
+            val=0
+            if root.left:
+                val+=self.tryRob(root.left.left,memo)+self.tryRob(root.left.right,memo)
+            if root.right:
+                val+=self.tryRob(root.right.left,memo)+self.tryRob(root.right.right,memo)
+            memo[root]=max(val+root.val,self.tryRob(root.left,memo)+self.tryRob(root.right,memo))
+        return memo[root]
+		
+动态规划：
+class Solution:
+    def rob(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        res=self.tryRob(root)
+        return max(res[0],res[1])
+    
+    def tryRob(self,root):
+        res=[0,0]
+        if root:
+            left=self.tryRob(root.left)
+            right=self.tryRob(root.right)
+            res[0]=root.val+left[1]+right[1]
+            res[1]=max(left[0],left[1])+max(right[0],right[1])
+        return res
+解释这个代码前，先注明一下：并不是所有动态规划都不需要递归，有递归也可以是动态规划
+我之前就在想，这是棵树，怎么可能反着访问呢。。
+事实上，递归和动态规划也不冲突
+res[0]存放的是，如果偷root的情况
+res[1]存放的是，如果不偷root的情况。一共就这两种情况。
+对于每一个点我都返回这两种情况能偷到的钱，然后取最大值
+
+		
+同HouseRobber1一样，全部重点在于理解try这个单词上
+状态定义：考虑偷孩子们还是孙子们
+状态转移：f(0)=max{v(0)+f(2),v(1)}，即，谁钱多偷谁的

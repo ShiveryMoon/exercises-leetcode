@@ -38,5 +38,5 @@ class Solution:
             rv=self.minDepth(root.right)
         return 1+min(lv,rv)#所以min一定不会返回一个maxsize
 		
-在任何时候都不会调用minDepth的时候传入(None)，除非一开始就给空树。
+在任何时候都不会给minDepth传入(None)，除非一开始就给空树。
 这就是这个函数的聪明之处。

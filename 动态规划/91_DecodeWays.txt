@@ -1,0 +1,23 @@
+class Solution:
+    def numDecodings(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        if not s or '00' in s or s.startswith('0'):
+            return 0
+        s=s+'0'
+        memo=[0]*(len(s))
+        memo[-1]=1
+        if s[-2]!='0':
+            memo[-2]=1
+        return self.memoSearch(0,memo,s)
+    
+    def memoSearch(self,n,memo,s): 
+        if memo[n]==0 and s[n]!='0':
+            memo[n]=self.memoSearch(n+1,memo,s)
+            if int(s[n]+s[n+1])<=26:
+                memo[n]+=self.memoSearch(n+2,memo,s)
+        return memo[n]
+		
+什么破题。。不想写动态规划版本了，很多没用的细节要考虑，so many corner cases
