@@ -16,7 +16,7 @@ class Solution:
                 for j in range(n,numones-1,-1):
                     memo[i][j]=max(memo[i][j],1+memo[i-numzeros][j-numones])
         return memo[-1][-1]
-		
+
 TLE at 61/63 tests
 		
 这道题一开始我没想好到底哪个是背包。其实我感觉以后可以这么想，固定不变的那个值就是背包。

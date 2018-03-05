@@ -8,13 +8,12 @@ class Solution:
         if len(nums)==0:
             return 0
         memo=[1 for i in range(len(nums))]
+        m=1
         for i in range(1,len(nums)):
             for j in range(i):
                 if nums[i]>nums[j]:
                     memo[i]=max(memo[i],1+memo[j])
-        m=0
-        for i in memo:
-            m=max(i,m)
+            m=max(m,memo[i])
         return m
 状态定义:F(i)在[0...i]的范围内，选择数字nums[i]可以获得的最长上升子序列的长度
 状态转移方程：F(i)=max(1+F(j) if nums[j]<nums[i])
@@ -55,3 +54,4 @@ class Solution:
 这样，我们甚至还能求出最终的这个完整路径，而不只是一个值
 
 但是，二分搜索法貌似只能给出一种最长子序列，但事实上有多个这样的序列。而老师讲过，动态规划是可以求出所有的最长子序列的。
+具体的方法是用回溯法求组合。

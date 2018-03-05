@@ -1,0 +1,27 @@
+这道题的子序列是需要连续的
+LCS中的子序列可以不连续
+
+class Solution:
+    def findLength(self, A, B):
+        """
+        :type A: List[int]
+        :type B: List[int]
+        :rtype: int
+        """
+        m,n=len(A),len(B)
+        ma=0
+        A.insert(0,None)
+        B.insert(0,None)
+		#dp[i][j] is the length of longest common subarray ending with nums[i] and nums[j]
+        memo = [[0 for i in range(n + 1)] for j in range(m + 1)]
+        for i in range(1, m+1):
+            for j in range(1, n+1):
+                if A[i]==B[j]:
+                    memo[i][j]=1+memo[i-1][j-1]
+                    ma=max(ma,memo[i][j])#这一行和状态转移无关
+        return ma
+		
+这题依然是一个在状态定义中没有“考虑”二字的问题。本质上还是LCS
+这个非常简单的状态转移方程，可以使得我们不更新某些memo，新的重复subarray就能从0重新开始计算
+在LCS中，我们还有一个else，保证memo里的每个点都会更新，但是这题不需要，我们就是要对新的subarray从0开始计算
+其实真的很简单，但我就是想不到。。。
