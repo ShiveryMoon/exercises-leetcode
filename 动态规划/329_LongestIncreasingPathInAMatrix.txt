@@ -1,0 +1,36 @@
+DFS+记忆化搜索
+class Solution:
+    def longestIncreasingPath(self, matrix):
+        """
+        :type matrix: List[List[int]]
+        :rtype: int
+        """
+        if len(matrix)==0:
+            return 0
+        m=len(matrix)
+        n=len(matrix[0])
+        ds=[[-1,0],[0,1],[1,0],[0,-1]]
+        memo=[[0 for i in range(n)] for j in range(m)]
+        res=1
+        for i in range(m):
+            for j in range(n):
+                res=max(res,self.memoSearch(matrix,memo,ds,m,n,i,j))
+        return res
+        
+    def inArea(self,m,n,x,y):
+        return 0<=x and x<m and 0<=y and y<n
+        
+    def memoSearch(self,matrix,memo,ds,m,n,startx,starty):
+        if memo[startx][starty]==0:
+            memo[startx][starty]=1
+            for i in range(4):
+                newx=startx+ds[i][0]
+                newy=starty+ds[i][1]
+                if self.inArea(m,n,newx,newy) and matrix[newx][newy]>matrix[startx][starty]:
+                    memo[startx][starty]=max(memo[startx][starty],1+self.memoSearch(matrix,memo,ds,m,n,newx,newy))
+        return memo[startx][starty]
+		
+这题本身不能用动态规划做。leetcode上，这题的topic也没有写DP
+因为这题没法划分为最小问题，事实上，最小问题就是“矩阵中最大的值的LIP是1”
+然而在动态规划的过程中找到怎么找到矩阵中最大的值作为自己的起点"memo[0]"？
+所以没法用DP
