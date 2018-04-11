@@ -1,0 +1,47 @@
+链表和列表的区别在于，列表的插入排序是从后往前遍历，而这个是从前往后遍历，因为链表只能从前往后遍历。
+
+class Solution:
+    def insertionSortList(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        p = dummy = ListNode(0)
+        cur = dummy.next = head
+        while cur and cur.next:
+            val = cur.next.val
+            if cur.val <= val:
+                cur = cur.next
+                continue
+            if p.next.val > val:#这里属于优化，即p不一定要回到起点。
+                p = dummy
+            while p.next.val <= val:#p指针不会超过cur，因为11行保证了val的值不会比所有排好序的元素都大。
+                p = p.next
+            new = cur.next
+            cur.next = new.next
+            new.next = p.next
+            p.next = new
+        return dummy.next
+其实链表的原地插入排序不难。
+主要是，需要一个指针cur指向未遍历到的第一个元素，而前面的所有元素是已经排好序的。
+再找一个指针来顺序遍历前面排好序的链表，寻找一个合适的位置插入cur
+
+非原地插入排序
+class Solution:
+    def insertionSortList(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        l=dummy=ListNode(0)
+        while head:
+            l=dummy
+            while l.next and l.next.val < head.val:
+                l=l.next
+            temp=head
+            head=head.next
+            temp.next=l.next
+            l.next=temp
+        return dummy.next
+		
+但是话又说回来了。。。。我又没有新建ListNode，第二个方法也是原地插入啊？？？空间复杂度是O1啊

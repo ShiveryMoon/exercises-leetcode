@@ -15,7 +15,7 @@ class Solution:
                 l2.next = head
                 l2 = l2.next
             head = head.next
-        l2.next = None
+        l2.next = None #然而二刷的时候这行卡到我了
         l1.next = h2.next
         return h1.next
 		

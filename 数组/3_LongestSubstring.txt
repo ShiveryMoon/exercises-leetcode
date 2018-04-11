@@ -1,0 +1,23 @@
+class Solution:
+    def lengthOfLongestSubstring(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        asc=[0]*256
+        l,r=0,-1
+        maxlen=0
+        while r+1<len(s):
+            if asc[ord(s[r+1])]==0:
+                r+=1
+                asc[ord(s[r])]=1
+            else:
+                asc[ord(s[l])]=0
+                l+=1
+            maxlen=max(maxlen,r-l+1)
+        return maxlen
+		
+两个难点：
+1是使用索引的方式用O1的时间复杂度求出某个元素是否出现过
+2是，要理解这个解法。我们需要先试探下一个元素是否重复，不重复才加入滑动窗口。
+一定要体会这个试探的动作。这就是为什么r初始化为-1并且用r+1来做判断的原因。

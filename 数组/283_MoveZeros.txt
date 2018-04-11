@@ -1,0 +1,11 @@
+class Solution:
+    def moveZeroes(self, nums):
+        l,r=0,0
+        while r<len(nums):
+            if nums[r]!=0:
+                nums[l],nums[r]=nums[r],nums[l]
+                l+=1
+            r+=1
+理解该算法的关键，还是老师所讲的，搞明白我们定义的指针到底代表着什么。
+这题中，[0,l)的元素是我们已经遍历过的非0元素，即最终答案。[l,r)全是0。
+r是我们用于遍历的指针，l左边全是已经遍历过的非0元素，l本身指向我们维持的所有0元素的起点。

@@ -12,6 +12,7 @@ class Solution:
         for pair in l:
             rs += pair[0] * pair[1]
         return rs
+		这里用+号联接字符串太蠢了，应该将所有字符append到列表，再join这个列表。
 		
 -----------------------------------------------用Counter对象终究不太厚道呀
 class Solution:

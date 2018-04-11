@@ -18,3 +18,24 @@ class Solution:
                 lastIndex += 1
                 legal=False
         return lastIndex
+		
+class Solution:
+    def removeDuplicates(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        l,r,curVal=0,0,None
+        times=0
+        while r<len(nums):
+            if nums[r]==curVal and times==1:
+                nums[l]=curVal
+                l+=1
+            times=0
+            if nums[r]!=curVal:
+                curVal=nums[r]
+                nums[l]=curVal
+                l+=1
+                times+=1
+            r+=1
+        return l

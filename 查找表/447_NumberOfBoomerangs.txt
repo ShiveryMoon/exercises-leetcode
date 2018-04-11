@@ -14,3 +14,5 @@ class Solution:
             for value in d.values():
                 count+=value*(value-1)
         return count
+		
+#这道题的关键是灵活选择键值，其他倒也没什么，有个小技巧就是对根号开方。

@@ -1,3 +1,10 @@
+由于我没找到python中用平衡二叉树实现的set，所以老师的方法我用不了。
+但其实，这道题就算不使用新方法，也可以用ContainsDuplicate1那道题的方法做出来
+不就是多了一个限制条件吗？那么，我们每将窗口向前移一位，就把当前窗口的所有值遍历一遍，看看是否符合abs(n1-n2)<=t。
+这也是可以的，只不过时间复杂度是On^2。
+回到老师的方法上来。老师的方法就是利用了平衡二叉树的顺序性，使用ceil或floor将时间复杂度降到Onlogn。其实也没什么。
+
+下面是从讨论区看到的一个方法。
 class Solution:
     def containsNearbyAlmostDuplicate(self, nums, k, t):
         """

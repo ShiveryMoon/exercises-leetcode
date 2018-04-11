@@ -27,3 +27,6 @@ class Solution:
                     nodeList[i].next=nodeList[i-1]
                 l=nodeList[1]
         return h.next
+		
+这题的关键思路在于21到23行。不同于普通的链表反转只使用3个指针，这题直接把所有需要翻转的节点全都用指针指向。
+这样的话会简单一些。当然了，使用普通的链表反转也是可以的。

@@ -1,0 +1,32 @@
+from collections import Counter
+
+class Solution:
+    def intersect(self, nums1, nums2):
+        """
+        :type nums1: List[int]
+        :type nums2: List[int]
+        :rtype: List[int]
+        """
+        c1 = Counter(nums1)
+        c2 = Counter(nums2)
+        return list((c1 & c2).elements())
+		
+class Solution:
+    def intersect(self, nums1, nums2):
+        """
+        :type nums1: List[int]
+        :type nums2: List[int]
+        :rtype: List[int]
+        """
+        d1,d2={},{}
+        for num in nums1:
+            d1[num]=d1.setdefault(num,0)+1
+        for num in nums2:
+            d2[num]=d2.setdefault(num,0)+1
+        s=set(d1.keys()).intersection(d2.keys())
+        for key in s:
+            d1[key]=min(d1[key],d2[key])
+        rl=[]
+        for key in s:
+            rl.extend([key for i in range(d1[key])])
+        return rl

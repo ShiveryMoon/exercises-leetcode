@@ -1,0 +1,61 @@
+终于还是顺利的写出来了自底向上的归并链表排序。
+思路：
+先将链表的长度求出来。
+size初始为1，每轮大循环后，size乘以二
+在每轮小循环里，归并操作前，我们需要找到4个指针：
+   1 2    3    4
+---- ---- ---- --------
+找到后，开始归并以2为起始点和3为起始点的两组链表
+直接让1在两组链表之间穿针引线，归并结束后，直接让1指向4。
+
+
+class Solution:
+    def sortList(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        dummy = ListNode(0)
+        dummy.next = head
+        length = 0
+        while head:
+            length += 1
+            head = head.next
+        size = 1
+        while size < length:  # 所有的元素至少能分成两组
+            l = dummy
+            index = 0 #必须使用一个计数索引来辅助，因为无论如何你都要知道你现在处理的是第几个元素。
+            while index + size < length:  # 剩下的元素至少能分成两组
+                l1 = l2 = l.next
+                for i in range(size):
+                    l2=l2.next
+                tail = l2
+                for i in range(size):
+                    if tail:
+                        tail=tail.next
+                i1 = i2 = 0
+                index+=size*2
+                while i1 < size and i2 < size and l2:
+                    if l1.val < l2.val:
+                        l.next = l1
+                        l = l.next
+                        l1 = l1.next
+                        i1 += 1
+                    else:
+                        l.next = l2
+                        l = l.next
+                        l2 = l2.next
+                        i2 += 1
+                while i1 < size:
+                    l.next = l1
+                    l = l.next
+                    l1 = l1.next
+                    i1 += 1
+                while i2 < size and l2:
+                    l.next = l2
+                    l = l.next
+                    l2 = l2.next
+                    i2 += 1
+                l.next = tail
+            size = size + size
+        return dummy.next

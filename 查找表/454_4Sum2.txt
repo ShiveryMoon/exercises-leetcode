@@ -1,0 +1,18 @@
+class Solution:
+    def fourSumCount(self, A, B, C, D):
+        """
+        :type A: List[int]
+        :type B: List[int]
+        :type C: List[int]
+        :type D: List[int]
+        :rtype: int
+        """
+        d={}
+        ri=0
+        for ni in A:
+            for nj in B:
+                d[ni+nj]=d.setdefault(ni+nj,0)+1
+        for ni in C:
+            for nj in D:
+                ri+=d.get(0-ni-nj,0)
+        return ri

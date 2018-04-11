@@ -5,14 +5,14 @@ class Solution:
         :type val: int
         :rtype: ListNode
         """
-        h=cur=ListNode(0)
-        cur.next=head
-        while cur.next:
-            if cur.next.val == val:
-                cur.next=cur.next.next
+        l=dummy=ListNode(0)
+        dummy.next=head
+        while l.next:
+            if l.next.val==val:
+                l.next=l.next.next
             else:
-                cur=cur.next
-        return h.next
+                l=l.next
+        return dummy.next
 上面是原地的，空间复杂度O1，下面空间复杂度On。
 肯定是上面这个好，但是下面也是我写的，舍不得删了。
 

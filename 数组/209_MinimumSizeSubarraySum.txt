@@ -20,3 +20,9 @@ class Solution:
         if minlength == len(nums)+1:
             return 0
         return minlength
+		
+#这题细节挺坑的。
+一定要考虑清楚如果所有元素加起来还是比s小的情况。这种情况下，right-left+1=len(nums)+1
+为什么会加个1，就是因为如果出现上述情况，那么r虽然加了1，但是l并没有，即，19行所说的整体向前在这种情况下是错误的，只有r向前了
+因此，r-l就已经等于len(nums)了
+所以，我们的minlen初始化必须是大于等于len(nums)+1的，这样20 21两行才会起作用。

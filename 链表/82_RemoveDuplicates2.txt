@@ -1,0 +1,27 @@
+class Solution:
+    def deleteDuplicates(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        l=dummy=ListNode(0)
+        dummy.next=head
+        nodup=True
+        while head and head.next:
+            if head.val==head.next.val:
+                nodup=False
+                head=head.next
+            else:
+                if nodup:
+                    l=l.next
+                    head=head.next
+                else:
+                    head=head.next
+                    l.next=head #这一招叫做伸出触手试探性连接，如果合适，就调用16行，向前走一步。如果不合适，l原地不动，继续试探
+                    nodup=True
+        if not nodup:
+            l.next=None
+        return dummy.next
+
+这道题的这种情况不好处理：[0,1,1,2,2,3]，两个1后面是两个2，如果刚过完两个1就改L变量的指向，那就指到2上了，这是不对的		
+这题恶心在：冗余的数全扔掉，不冗余的数留着，注意是全扔掉啊。

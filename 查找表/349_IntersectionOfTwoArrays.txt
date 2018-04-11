@@ -5,9 +5,5 @@ class Solution:
         :type nums2: List[int]
         :rtype: List[int]
         """
-        if len(nums1) and len(nums2):
-            s1=set(nums1)
-            s2=set(nums2)
-            return list(s1&s2)
-        else:
-            return []
+        s=set(nums1)
+        return list(s.intersection(nums2))

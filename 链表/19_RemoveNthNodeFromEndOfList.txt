@@ -15,5 +15,3 @@ class Solution(object):
             r=r.next
         l.next=l.next.next
         return dummy.next
-如果不知道什么时候该用dummyhead的话，那么记住一点：如果要删掉某个节点，就一定要设置dummyhead
-因为删掉节点需要访问该节点之前的节点。

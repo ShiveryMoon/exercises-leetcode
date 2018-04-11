@@ -1,0 +1,23 @@
+class Solution(object):
+    def isValid(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        stack=[]
+        d={'{':'}','[':']','(':')'}
+        for c in s:
+            if c in d:
+                stack.append(c)
+            else:
+                if len(stack)!=0 and d[stack.pop()]==c:
+                    continue
+                else:
+                    return False
+        return True and not bool(len(stack))
+		
+这道题明明看起来贼简单，但是细节特别多，想写对不太容易。
+1.我一开始以为这道题给出的字符串会是前面一般都是左括号，右面一半都是又括号。。我甚至以为这道题可以用逆字符串来解。
+然而人家还可以是"(){}[]"这样的
+2.13行对栈的长度判断一定不能漏。如果栈是空的就碰到右括号，是无法pop的
+3.最后对栈的长度判断一定不能漏。如果栈不是空的，说明给出的字符串是奇数个，不合法。

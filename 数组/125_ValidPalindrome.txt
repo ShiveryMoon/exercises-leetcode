@@ -15,3 +15,14 @@ class Solution:
             left+=1
             right-=1
         return True
+		
+import re
+
+class Solution:
+    def isPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        s=''.join(re.split('\W+',s)).lower()
+        return s==s[::-1]

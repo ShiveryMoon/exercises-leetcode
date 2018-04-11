@@ -1,0 +1,36 @@
+class Solution:
+    def removeElement(self, nums, val):
+        """
+        :type nums: List[int]
+        :type val: int
+        :rtype: int
+        """
+        l,r=0,0
+        while r<len(nums):
+            if nums[r]!=val:
+                nums[r],nums[l]=nums[l],nums[r]
+                l+=1
+            r+=1 #像这样，每次while都保证一次r的自增，就可以把while换成for循环了！
+        return l
+这个做法和283是一样的。
+和那道题一样，一定要搞清楚0~l，l~r，r~END这三个区间都代表什么，并且，l和r这个点又代表着什么。
+下面这个是我第一次的解法，不舍得扔。
+
+class Solution:
+    def removeElement(self, nums, val):
+        left = 0
+        right = len(nums)-1
+        while left<=right:
+            if nums[left] == val:
+                while nums[right]==val and right>=0:
+                    right -= 1
+                if left<right:
+                    nums[left]=nums[right]
+                    left += 1
+                    right -= 1
+                else:
+                    break
+            else:
+                left += 1
+        return left
+			

@@ -26,3 +26,18 @@ class Solution:
                 nums[lastIndex]=lastNum
                 lastIndex+=1
         return lastIndex
+
+class Solution:
+    def removeDuplicates(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        l,r,curVal=0,0,None
+        while r<len(nums):
+            if nums[r]!=curVal:
+                curVal=nums[r]
+                nums[l]=curVal
+                l+=1
+            r+=1 #像这样，每次while都保证一次r的自增，就可以把while换成for循环了！所以这个答案和第二个答案是一样的。
+        return l

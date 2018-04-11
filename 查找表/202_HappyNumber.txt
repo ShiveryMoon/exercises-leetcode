@@ -5,11 +5,9 @@ class Solution:
         :rtype: bool
         """
         s=set()
-        i=n
-        while i!=1:
-            i=sum([int(k)*int(k) for k in str(i)])
-            if i in s:
+        while n!=1:
+            s.add(n)
+            n=sum([int(x)*int(x) for x in str(n)])
+            if n in s:
                 return False
-            else:
-                s.add(i)
         return True
