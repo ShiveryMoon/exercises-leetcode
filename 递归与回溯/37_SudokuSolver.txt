@@ -14,16 +14,16 @@ class Solution:
                     return row,col
         return -1,-1
     
-    def solve(self):
+    def solve(self):#该函数的返回值是bool。
         row,col=self.findUnassigned()
-        if row==-1 and col==-1:
+        if row==-1 and col==-1:#如果返回-1，说明findUnassigned函数检查了整个board，都是数字。即找到答案了。
             return True
         for num in ['1','2','3','4','5','6','7','8','9']:
-            if self.safe(row,col,num):
-                self.board[row][col]=num
-                if self.solve():
+            if self.safe(row,col,num):#判断num是否合适。
+                self.board[row][col]=num#找到一个暂时合适的解
+                if self.solve():#继续找下一个解
                     return True
-                self.board[row][col]='.'
+                self.board[row][col]='.'#如果最终失败了，将该解改回未处理状态。如果最终成功了，该行不会被运行。
         return False
     
     def safe(self,row,col,num):

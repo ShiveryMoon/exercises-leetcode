@@ -15,3 +15,5 @@ def LCS(s1,s2):
             else:
                 memo[i][j] = max(memo[i-1][j], memo[i][j - 1])
     return memo[-1][-1]
+	
+将一个空格放在s1和s2前面，防止索引i-1/j-1的时候越界。

@@ -30,10 +30,13 @@ class Solution:
         res=self.tryRob(root)
         return max(res[0],res[1])
     
+	这个函数的返回值有两个，取root或不取root能够偷到的钱。也就是说，这两者谁的钱多(max)的操作它不帮你做。
+	为什么不做这个操作呢？因为我们的逻辑里需要取得尝试偷孙子所能获得的钱。
+	如果tryRob只返回一个值，即尝试偷孩子所能获得的钱，是无法完成该逻辑的。
     def tryRob(self,root):
-        res=[0,0]
+        res=[0,0]#0元素代表偷取root后所能获得的最多钱，1元素代表不偷root
         if root:
-            left=self.tryRob(root.left)
+            left=self.tryRob(root.left)#left1和root的孙子相关。
             right=self.tryRob(root.right)
             res[0]=root.val+left[1]+right[1]
             res[1]=max(left[0],left[1])+max(right[0],right[1])
@@ -45,7 +48,4 @@ res[0]存放的是，如果偷root的情况
 res[1]存放的是，如果不偷root的情况。一共就这两种情况。
 对于每一个点我都返回这两种情况能偷到的钱，然后取最大值
 
-		
-同HouseRobber1一样，全部重点在于理解try这个单词上
-状态定义：考虑偷孩子们还是孙子们
-状态转移：f(0)=max{v(0)+f(2),v(1)}，即，谁钱多偷谁的
+不过话说回来了，这道题的topics里面没有动态规划，也就是说这道题leetcode不认为是动态规划的题目。。

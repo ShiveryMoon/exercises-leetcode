@@ -22,3 +22,16 @@ class Solution:
 不过这道题也确实算是一个完全背包+排列的问题
 状态定义F(i,N):考虑从所有N个str中是否有一种排列可以组成s[0:i+1]这个字符串
 状态转移方程：不太好写，总之就是第16行。
+二刷：
+		memo=[False]*(len(s)+1)
+        memo[0]=True
+        for i in range(1,len(s)+1):
+            for word in wordDict:
+                l=len(word)
+                if i>=l and s[i-l:i]==word and memo[i-l]:
+                    memo[i]=True
+                    break
+        return memo[-1]
+我表示一开始没看出来这是完全背包+排列，我以为是完全背包+组合。。。
+有1个需要注意的地方。关于这个break，由于这是排列，所以memo的更新顺序不是一行一行而是一列一列
+所以如果这一列已经为True，就不需要再管这一列了。

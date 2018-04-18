@@ -7,14 +7,12 @@ class Solution:
         """
         if len(nums)==0:
             return 0
-        memo=[1 for i in range(len(nums))]
-        m=1
+        memo=[1]*len(nums)
         for i in range(1,len(nums)):
             for j in range(i):
-                if nums[i]>nums[j]:
-                    memo[i]=max(memo[i],1+memo[j])
-            m=max(m,memo[i])
-        return m
+                if nums[j]<nums[i]:
+                    memo[i]=max(memo[i],memo[j]+1)
+        return max(memo)
 状态定义:F(i)在[0...i]的范围内，选择数字nums[i]可以获得的最长上升子序列的长度
 状态转移方程：F(i)=max(1+F(j) if nums[j]<nums[i])
 这类题目和背包问题的区别是什么?
@@ -35,10 +33,10 @@ class Solution:
         seq=[]
         for num in nums:
             index=bisect.bisect_left(seq,num)
-            if index==len(seq):
+            if index==len(seq):#如果num比seq里所有元素都大
                 seq.append(num)
             else:
-                seq[index]=num
+                seq[index]=num#可以保证num<=seq[index]，这个替换操作可以让seq里的元素维持最小
         return len(seq)
 		
 这个解法没有运用什么高深的思想，其实就用了一个技巧。else里是关键。

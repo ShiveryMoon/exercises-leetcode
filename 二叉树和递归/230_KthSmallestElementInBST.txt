@@ -5,14 +5,40 @@ class Solution:
         :type k: int
         :rtype: int
         """
-        count,l=[1],[]
-        self.helper(root,count,k,l)
+        count,l=[0],[]
+        self.countNode(root,count,k,l)
         return l[0]
     
-    def helper(self,root,count,k,l):
+    def countNode(self,root,count,k,l):
         if root:
-            a=self.helper(root.left,count,k,l)
+            self.countNode(root.left,count,k,l)
+            count[0]+=1
             if count[0]==k:
                 l.append(root.val)
-            count[0]+=1
-            b=self.helper(root.right,count,k,l)
+				return True
+            self.countNode(root.right,count,k,l)
+
+怎么说呢，这个算法还是巧妙地运用了中序遍历。
+二分搜索树的特性之一就是中序遍历输出有序数组。
+想要知道某个节点排名第几？左子树的节点数+1就是当前节点的排名。
+先把左子树的节点数算出来,加一后，就是当前节点的排名。
+我之前一直没想明白，如果从根节点入手的话，我怎么知道这个根节点排名第几？
+事实上很简单，先把左子树的节点数算出来就行了。。
+
+下面这个算法就不需多提了。			
+class Solution:
+    def kthSmallest(self, root, k):
+        """
+        :type root: TreeNode
+        :type k: int
+        :rtype: int
+        """
+        l=[]
+        self.helper(root,l)
+        return l[k-1]
+    
+    def helper(self,root,l):
+        if root:
+            a=self.helper(root.left,l)
+            l.append(root.val)
+            b=self.helper(root.right,l)

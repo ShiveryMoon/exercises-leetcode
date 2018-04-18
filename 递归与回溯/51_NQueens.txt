@@ -1,3 +1,14 @@
+二刷的时候这道题的实现细节给忘了。
+由于我们是按行遍历，所以n皇后问题中的行约束不需要考虑
+其它三种约束的具体实现方式需要注意一下，不要忘了
+还有，这道题我们不使用具体坐标（要用也是可以的，但是已经习惯了），只使用行id。
+在row列表中，索引代表行，值代表列。row这个单元素列表其实存了一组坐标，即具体的解。
+
+注意，这道题和我们之前做回溯题所使用的sl、tl、rl组合不一样。那种做法中，给每层递归复制了一个新的列表tl
+而这道题不需要。事实上，这道题几乎所有变量都可以设置为实例属性，在所有递归栈中共用。
+为什么呢，就因为我们在调用了递归函数后，还手动将环境给改回去。
+只要程序不是并发的，那就没问题。
+我感觉这其实只是两种解题方式。这道题用sl、tl、rl组合应该也是可以的。
 class Solution:
     def solveNQueens(self, n):
         """
@@ -12,21 +23,21 @@ class Solution:
         self.putQueen(n,col,dia1,dia2,rl,0,row)
         return rl
         
-    def putQueen(self,n,col,dia1,dia2,rl,index,row):
-        if index==n:
+    def putQueen(self,n,col,dia1,dia2,rl,rowid,row):
+        if rowid==n:
             rl.append(self.generateBoard(n,row))
             return True
-        for i in range(n):
-            if not col[i] and not dia1[index+i] and not dia2[index-i+n-1]:
+        for i in range(n):#i代表第几列
+            if not col[i] and not dia1[rowid+i] and not dia2[rowid-i+n-1]:
                 row.append(i)
                 col[i]=True
-                dia1[index+i]=True
-                dia2[index-i+n-1]=True
-                self.putQueen(n,col,dia1,dia2,rl,index+1,row)
+                dia1[rowid+i]=True
+                dia2[rowid-i+n-1]=True
+                self.putQueen(n,col,dia1,dia2,rl,rowid+1,row)
                 row.pop()
                 col[i]=False
-                dia1[index+i]=False
-                dia2[index-i+n-1]=False
+                dia1[rowid+i]=False
+                dia2[rowid-i+n-1]=False
                 
     def generateBoard(self,n,row):
         l=[]
@@ -49,21 +60,21 @@ class Solution:
         self.putQueen(n,0)
         return self.rl
         
-    def putQueen(self,n,index):
-        if index==n:
+    def putQueen(self,n,rowid):
+        if rowid==n:
             self.rl.append(self.generateBoard(n))
             return True
         for i in range(n):
-            if not self.col[i] and not self.dia1[index+i] and not self.dia2[index-i+n-1]:
+            if not self.col[i] and not self.dia1[rowid+i] and not self.dia2[rowid-i+n-1]:
                 self.row.append(i)
                 self.col[i]=True
-                self.dia1[index+i]=True
-                self.dia2[index-i+n-1]=True
-                self.putQueen(n,index+1)
+                self.dia1[rowid+i]=True
+                self.dia2[rowid-i+n-1]=True
+                self.putQueen(n,rowid+1)
                 self.row.pop()
                 self.col[i]=False
-                self.dia1[index+i]=False
-                self.dia2[index-i+n-1]=False
+                self.dia1[rowid+i]=False
+                self.dia2[rowid-i+n-1]=False
                 
     def generateBoard(self,n):
         l=[]

@@ -50,3 +50,7 @@ class Solution:
                 self.dfs(matrix,m,n,ds,status,visited,times,newx,newy,td)
 				
 106/113 pass
+我设置times变量的原因，其实是想让主函数的双重循环的每次循环都使用全新的visited表格。
+所以，其实在循环内部重新定义一个新的visited表格也是可以的，不需要使用times。
+status表格存的是已经符合条件的点。如果在判断某个点是否符合条件的时候，能找到一条路径走到status中已经True的点，就直接返回True。
+由于既属于太平洋又属于大西洋的点只有左下角和右上角，所以43和46的if不会一起进去的，我这么写的逻辑是对的。

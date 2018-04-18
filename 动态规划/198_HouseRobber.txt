@@ -1,3 +1,19 @@
+这道题二刷的时候很自然地就写出了这个超简洁的答案。。为什么老师要用那么绕的写法呢？
+class Solution:
+    def rob(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        if len(nums)==0:
+            return 0
+        memo=[-1 for i in range(len(nums)+1)]
+        memo[0]=0
+        memo[1]=nums[0]
+        for i in range(2,len(nums)+1):
+            memo[i]=max(nums[i-1]+memo[i-2],memo[i-1])
+        return memo[-1]
+
 记忆化搜索：
 class Solution:
     def rob(self, nums):

@@ -1,7 +1,3 @@
-这个代码，更新memo的形式是这样的：
-每次外循环循环只更新memo[i]，memo[i+1]以及之后的数，都是初始化的0，不会变
-内循环会反复更新memo[i]。
-
 class Solution:
     def combinationSum4(self, nums, target):
         """
@@ -9,29 +5,15 @@ class Solution:
         :type target: int
         :rtype: int
         """
-        n=len(nums)
-        if (n==0): return 0
-        memo=[0 for i in range(target+1)]
-        memo[0]=1 #这里的逻辑是，memo[0]=[]，你要先初始化一个“列表”，后面的遍历才好往里面append
+        memo=[0]*(target+1)
+        memo[0]=1#先初始化一个“列表”，后面的元素才能append
         for i in range(1,target+1):
             for num in nums:
-                if (num<=i):
+                if num<=i:
                     memo[i]+=memo[i-num]
         return memo[-1]
-		
-我列了整整一张A4纸，发现这个循环的逻辑实在是太巧秒了。。。 
-按这个例子来说，其实memo[4]=memo[3]+memo[2]+memo[1] 
-每次更新memo[i]的时候，其实就是把num[j]添加到memo[i-j]的所有情况(列表)的末尾
-而memo[i-j]本身代表的int值是不变的。 
-想不到这么简单的几行代码的内在逻辑这么复杂
 
-那么这个代码哪里体现出这是一个完全背包+排列的问题？
-首先它是一个排列，所以我们看到18行每次都遍历所有数字
-那么他为什么是一个完全背包？
-因为，18行不仅遍历了所有数字，它还没有删掉被遍历的数字本身！
-换句话说，下次我们依旧可以遍历已经被用过的数字，也就是说这个数字的使用次数无限。
-
-
-老师的解释见：https://coding.imooc.com/learn/questiondetail/44195.html
-		
-		
+这个代码，更新memo的形式是这样的：
+每次外循环循环只更新memo[i]，memo[i+1]以及之后的数，都是初始化的0，不会变
+内循环会反复更新memo[i]。		
+老师的解释见：https://coding.imooc.com/learn/questiondetail/44195.html	

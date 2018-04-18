@@ -1,0 +1,43 @@
+普通递归：
+def fib(n):
+    if n==0:
+        return 0
+    if n==1:
+        return 1
+    return fib(n-1)+fib(n-2)
+
+记忆化搜索
+def fib(n):
+    if n==0:
+        return 0
+    if n==1:
+        return 1
+    if memo[n]==-1:
+        memo[n]=fib(n-1)+fib(n-2)
+    return memo[n]
+
+n=??
+memo=[-1]*(n+1)
+fib(n)
+
+动态规划：
+def fib(n):
+    memo=[-1]*(n+1)
+    memo[0]=0
+    memo[1]=1
+    for i in range(2,n+1):
+        memo[i]=memo[i-1]+memo[i-2]
+    return memo[n]
+	
+常数空间复杂度+动态规划：
+def fib(n):
+    a=0
+    b=1
+    for i in range(1,n):
+        a,b=b,a+b
+    return b
+	循环里的逻辑其实是：
+	temp=a
+	a=b
+	b=temp+b
+	a就是上一个数

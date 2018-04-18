@@ -1,3 +1,5 @@
+总结：这道题的算法不在于算平衡因子啥的，不要考虑那个。这道题还是基于树高来做的。
+
 class Solution:
     def isBalanced(self, root):
         """
@@ -22,21 +24,16 @@ class Solution:
         :type root: TreeNode
         :rtype: bool
         """
-        return self._dfs(root)!=-1
-    
-    def _dfs(self,root):
+        return self.dfs(root)!=-1
+        
+    def dfs(self,root):#本质上还是在算树高，而算树高的函数是On的。
         if root is None:
             return 0
-        lh=self._dfs(root.left)
-        if lh==-1:
+        lh=self.dfs(root.left)
+        rh=self.dfs(root.right)
+        if lh==-1 or rh==-1 or abs(lh-rh)>1:
             return -1
-        rh=self._dfs(root.right)
-        if rh==-1:
-            return -1
-        if abs(lh-rh)>1:
-            return -1
-        else:
-            return 1+max(lh,rh)
+        return 1+max(lh,rh)
 			
 第一个方法是Onlogn的，第二个方法是On的
 其实第一个方法我没想写出来的，因为明摆着重复计算了每个节点的高度。
@@ -46,3 +43,4 @@ class Solution:
 第二个方法其实很简单。。。我他妈的怎么就没想明白这是个后序遍历呢？
 只要算了左节点高度，再算出右节点高度，然后做计算就行了。这是一个典型的后序遍历。
 注意，一旦有一个-1，就要把-1一直送回去。break可以跳出循环，可是没有什么操作可以跳出递归，所以一定要把-1送回去。
+第二个方法本质上还是在算树高。只不过在中间加了一个小判断：如果左右两个子树的树高差大于1，那就不用继续算了。

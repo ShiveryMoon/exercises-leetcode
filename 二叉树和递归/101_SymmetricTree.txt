@@ -50,7 +50,6 @@ class Solution:
                 queue.insert(0,(cur.right,level+1))
             else:
                 rl[level].append(None)
-        print(rl)
         reverserl=[]
         for l in rl:
             xl=l[:]

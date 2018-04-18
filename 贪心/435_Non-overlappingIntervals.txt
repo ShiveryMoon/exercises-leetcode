@@ -1,3 +1,8 @@
+这道题我们转化为，如何选取最多的区间，使这些区间不重叠，注意，这些区间不需要连续（天知道为什么我一开始以为这些区间需要连续？）
+这道题只有一个限制条件：当前区间的start>=上一个区间的end。
+如果我们每次挑选区间的时候，都选取符合上述条件的区间里，结尾最早的区间，就能选到最多的区间。
+这就是该题的贪心思路
+
 动态规划(TLE):
 class Solution:
     def eraseOverlapIntervals(self, intervals):
@@ -33,8 +38,8 @@ class Solution:
         curEnd=intervals[0].end
         res=1
         for i in range(1,length):
-            if intervals[i].start>=curEnd:
+            if intervals[i].start>=curEnd:#一旦有符合这个条件的区间出现，那这个区间的结尾一定是所有符合这个条件的区间里结尾最小的区间。
                 res+=1
                 curEnd=intervals[i].end
         return length-res
-            
+这种贪心思想根本就想不到啊。。。。

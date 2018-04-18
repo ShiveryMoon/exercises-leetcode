@@ -4,19 +4,19 @@ class Solution:
         :type nums: List[int]
         :rtype: int
         """
-        if not nums:
+        if len(nums)==0:
             return 0
         if len(nums)==1:
             return nums[0]
         return max(self.helper(nums[:-1]),self.helper(nums[1:]))
-        
+    
     def helper(self,nums):
-        memo=[-1 for x in range(len(nums))]
-        memo[-1]=nums[-1]
-        for i in range(len(nums)-2,-1,-1):
-            for j in range(i,i+2 if i+2<=len(nums) else len(nums)):
-                memo[i]=max(memo[i],nums[j]+(memo[j+2] if j+2<len(nums) else 0))
-        return memo[0]
+        memo=[-1 for i in range(len(nums)+1)]
+        memo[0]=0
+        memo[1]=nums[0]
+        for i in range(2,len(nums)+1):
+            memo[i]=max(nums[i-1]+memo[i-2],memo[i-1])
+        return memo[-1]
 		
 这题如果我不看discuss/hints是绝对想不到的。。
 我们可以打破这个圈，让这道题退化成HouseRobber1

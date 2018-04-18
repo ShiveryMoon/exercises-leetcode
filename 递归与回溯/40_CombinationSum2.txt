@@ -1,3 +1,34 @@
+搞不懂我第一次做的时候怎么那么麻烦，二刷的时候很轻松就想到了更好的办法。
+class Solution:
+    def combinationSum2(self, candidates, target):
+        """
+        :type candidates: List[int]
+        :type target: int
+        :rtype: List[List[int]]
+        """
+        candidates.sort()
+        rl=[]
+        self.backT(candidates,target,0,[],rl)
+        return rl
+    
+    def backT(self,can,target,sums,sl,rl):
+        if sums==target:
+            rl.append(sl)
+        elif sums>target:
+            return True
+        else:
+            last=None
+            for i,num in enumerate(can):
+                if last==num:
+                    continue
+                else:
+                    last=num
+                    tl=sl+[num]
+                    self.backT(can[i+1:],target,sums+num,tl,rl)
+
+下面的代码我他妈都看傻了。
+
+一刷的解法：
 class Solution:
     def combinationSum2(self, candidates, target):
         """

@@ -14,8 +14,32 @@ class Solution:
             return True
         appeared=[]
         for i,num in enumerate(nums):
-            if num in appeared:
+            if num in appeared:#这一行的时间复杂度看着我有点害怕，事实证明下面的解法更快。
                 continue
             appeared.append(num)
             sl=tl+[num]
             self.backTracking(nums[:i]+nums[i+1:],sl,rl)
+			
+class Solution:
+    def permuteUnique(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        rl=[]
+        nums.sort()
+        self.backT(nums,[],rl)
+        return rl
+    
+    def backT(self,nums,sl,rl):
+        if len(nums)==0:
+            rl.append(sl)
+        else:
+            last=None
+            for i,num in enumerate(nums):
+                if last==num:
+                    continue
+                else:
+                    last=num
+                    tl=sl+[num]
+                    self.backT(nums[:i]+nums[i+1:],tl,rl)

@@ -7,14 +7,12 @@ class Solution:
         :type amount: int
         :rtype: int
         """
-        memo=[amount+1 for x in range(amount+1)]
-        for c in range(amount+1):
-            if c%coins[0]==0:
-                memo[c]=c//coins[0]
-        for i in range(1,len(coins)):
+        memo=[amount+1]*(amount+1)
+        memo[0]=0#肯定要初始化啊，否则所有值都是amount+1，min逻辑不会改变任何值
+        for i in range(len(coins)):
             for c in range(coins[i],amount+1):
-                memo[c]=min(memo[c],1+memo[c-coins[i]])
-        return -1 if memo[amount]==amount+1 else memo[amount]
+                memo[c]=min(memo[c],memo[c-coins[i]]+1)
+        return memo[-1] if memo[-1]!=amount+1 else -1
 		
 这题比我想象的要难。。
 如果保证有解，那它就是个最普通的完全背包问题，完全没难度
@@ -26,6 +24,6 @@ class Solution:
 memo初始化的时候取最大值，这是因为题目要求取最小值，这关系到16行的min函数。同时用最大值来表示“没有解”。
 然后的逻辑发生在11行的for循环里，如果当前的数额没法只用第一个硬币找钱，就维持最大值不动
 然后进行大的for循环。最值得关注的一点就是，“钱找不开就维持最大值”这个逻辑是可以传递下去的
-如果memo[c]是最大值(意味着不管用不用第i种硬币都找不开数额c)
-且memo[c-coins[i]]也是最大值(只使用1个第i种硬币也找不开数额c)
+如果memo[c]是最大值(意味着不用第i种硬币都找不开数额c)
+且memo[c-coins[i]]也是最大值(用第i种硬币也找不开数额c)
 那么memo[c]里依旧存放最大值，表示使用[0...i]种硬币(每种硬币无限)来找钱的时候，他们之间的面值之和无法等于c

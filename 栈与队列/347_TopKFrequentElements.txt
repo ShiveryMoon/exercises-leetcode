@@ -1,3 +1,4 @@
+一：
 class Solution:
     def topKFrequent(self, nums, k):
         """
@@ -7,3 +8,28 @@ class Solution:
         """
         return [x[0] for x in collections.Counter(nums).most_common(k)]
 		#return list(zip(*collections.Counter(nums).most_common(k)))[0]
+
+二：		
+import heapq
+class Solution:
+    def topKFrequent(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: List[int]
+        """
+        d={}
+        heap=[]
+        for num in nums:
+            d[num]=d.get(num,0)+1
+        z=zip(d.values(),d.keys())
+        for i,pair in enumerate(z):
+            if i+1<=k:
+                heapq.heappush(heap,pair)
+            else:
+                if pair[0]>heap[0][0]:
+                    heapq.heapreplace(heap,pair)
+        return [pair[1] for pair in heap]
+		
+三：
+快排找到排名为k的标定点，然后返回[:k+1]

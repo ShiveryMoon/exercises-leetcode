@@ -15,7 +15,7 @@ class Solution:
         rl=[]
         letterMap=[' ','','abc','def','ghi','jkl','mno','pqrs','tuv','wxyz']
         if digits:
-            self.findCombinations(digits,0,'',rl,letterMap)因为我很清楚python对列表是引用传递，所以我直接这么写，而不用担心性能问题。事实证明这个代码beat 100%
+            self.findCombinations(digits,0,'',rl,letterMap)
         return rl
     
     def findCombinations(self,digits,index,s,rl,letterMap):

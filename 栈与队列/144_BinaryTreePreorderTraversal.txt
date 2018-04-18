@@ -44,3 +44,7 @@ class Solution:
                     stack.append(Command('go',node.left))
                 stack.append(Command('print',node))
         return rl
+		
+操作系统处理递归的时候其实就是这样的。
+当前函数运行完毕后，操作系统完全不知道该干嘛，它只能去弹栈，根据栈里面的信息决定接下来干什么
+如果栈是空的，说明递归结束。

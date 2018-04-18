@@ -1,0 +1,6 @@
+class Solution:
+    def maxSubArray(self, nums):
+        for i in range(1,len(nums)):
+            nums[i]=max(nums[i],nums[i]+nums[i-1])
+        return max(nums)
+这个算法有个名字，叫kadane's algorithm

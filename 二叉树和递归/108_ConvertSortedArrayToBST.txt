@@ -7,7 +7,7 @@ class Solution:
         return self.helper(nums,0,len(nums)-1)
     
     def helper(self,nums,first,last):
-        if last>=first:
+        if last>=first: #这个等号很关键呀
             mid=last-first+1
             if mid%2==0:
                 mid=first+mid//2

@@ -1,3 +1,23 @@
+这是我二刷的时候自己写出来的，明显好理解多了。
+class Solution:
+    def minDepth(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        if root is None:
+            return 0
+        if not root.left and not root.right:
+            return 1
+        elif root.left and root.right:
+            return 1+min(self.minDepth(root.left),self.minDepth(root.right))
+        else:
+            if root.left:
+                return self.minDepth(root.left)+1
+            else:
+                return self.minDepth(root.right)+1
+
+
 class Solution:
     def minDepth(self, root):
         """

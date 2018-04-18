@@ -7,15 +7,15 @@ class Solution(object):
         if root is None:
             return []
         rl=[]
-        queue=[]
-        queue.insert(0,(root,0))
+        queue=[(0,root)]
         while len(queue):
-            cur=queue.pop()
-            if len(rl)==cur[1]:
+            num,node=queue.pop()
+            print(num,node.val)
+            if num==len(rl):
                 rl.append([])
-            rl[cur[1]].append(cur[0].val)
-            if cur[0].left:
-                queue.insert(0,(cur[0].left,cur[1]+1))
-            if cur[0].right:
-                queue.insert(0,(cur[0].right,cur[1]+1))
+            rl[num].append(node.val)
+            if node.left:
+                queue.insert(0,(num+1,node.left))
+            if node.right:
+                queue.insert(0,(num+1,node.right))
         return rl

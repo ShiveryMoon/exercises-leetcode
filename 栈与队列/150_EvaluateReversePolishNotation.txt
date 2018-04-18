@@ -24,3 +24,6 @@ class Solution(object):
             return op1*op2
         else:
             return int(op1/op2)
+
+这题怎么说呢，和我在python数据结构上看的那本书不一样，这题简单多了
+这题只是后缀表达式求值而已，很简单。

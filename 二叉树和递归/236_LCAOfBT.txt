@@ -7,17 +7,18 @@ class Solution(object):
         :rtype: TreeNode
         """
         if root in (None, p, q): 
-            return root  #其实可以把这一行想象成布尔值。如果root是None就返回false，否则返回true，并且true只返回一次。
-        left=self.lowestCommonAncestor(root.left, p, q)
-        right=self.lowestCommonAncestor(root.right, p, q)
+            return root  
+        left=self.lowestCommonAncestor(root.left, p, q)#看看左子树里是否含有p或q或LCA
+        right=self.lowestCommonAncestor(root.right, p, q)#看看右子树里是否含有p或q或LCA
         return root if left and right else left or right
 		
 这题挺难的，代码异常的简单，但是想通却有点难。
 LCA问题其实就是在找能将两个节点分到左右两边的那个节点(包括自己)
-仔细想想就能明白，这个节点是唯一的
+仔细想想就能明白，这个节点是唯一的。两个节点向上走，两条线最后只有一个交点。
 所以，分别在左右子树中查找p or q这个逻辑
 如果左右子树中p or q这个逻辑都是true，那么当前root就是所要找的
 否则，说明p和q都在一颗子树中，只返回左或者右。当然了，如果左右都是none就返回none
 
 最后一行有个小逻辑：如果在哪一层中触发了left and right逻辑，那么这之后往上的递归全都只会触发left or right逻辑
 这样，我们找到的LCA就会一路往上。
+不止LCA会一路向上，在LCA一路向上之前，p和q如果找到了，会先一路向上。当集齐pq两者后，p和q的“两个一路向上”转化为LCA的“一个一路向上”

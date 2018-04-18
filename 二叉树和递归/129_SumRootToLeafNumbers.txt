@@ -1,19 +1,19 @@
-from functools import reduce
-
 class Solution:
     def sumNumbers(self, root):
         """
         :type root: TreeNode
         :rtype: int
         """
-        rl,es=['0'],'' #初始化0是为了防止root为None导致reduce函数处理空列表
-        self.helper(root,es,rl)
-        return reduce(lambda x,y:x+y,[int(s) for s in rl])
+        s=''
+        rl=[]
+        self.f(root,s,rl)
+        return sum(rl)
     
-    def helper(self,root,es,rl):
+    def f(self,root,s,rl):
         if root:
-            es=es+str(root.val)
+            s=s+str(root.val)
             if not root.left and not root.right:
-                rl.append(es)
-            self.helper(root.left,es,rl)
-            self.helper(root.right,es,rl)
+                rl.append(int(s))
+            else:
+                self.f(root.left,s,rl)
+                self.f(root.right,s,rl)

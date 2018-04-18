@@ -1,0 +1,24 @@
+class Solution:
+    def findTargetSumWays(self, nums, S):
+        """
+        :type nums: List[int]
+        :type S: int
+        :rtype: int
+        """
+        sums=S+sum(nums)
+        if sums%2!=0:#优化1
+            return 0
+        if sum(nums)<S:#优化2，必须优化，否则某数据空间超出，memo列表太大。
+            return 0
+        sums//=2
+        print(sums)
+        memo=[0]*(sums+1)
+        memo[0]=1
+        for i in range(0,len(nums)):
+            for s in range(sums,nums[i]-1,-1):
+                memo[s]+=memo[s-nums[i]]
+        return memo[-1]
+		
+讨论区排名第一的帖子将该问题成功转换为leetcode416
+即，从nums里挑选数字，使其和为target，求有多少种数字组合。
+转换以后，该题非常简单，所以这道题教会我的是如何巧妙地把题目变成我做过的题。。。

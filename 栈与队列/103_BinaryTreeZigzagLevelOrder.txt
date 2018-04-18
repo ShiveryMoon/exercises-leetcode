@@ -14,7 +14,7 @@ class Solution(object):
             if len(rl)==cur[1]:
                 rl.append([])
             if cur[1]%2!=0:
-                rl[cur[1]].insert(0,cur[0].val)
+                rl[cur[1]].insert(0,cur[0].val)#虽然这样看起来高大上，但其实时间复杂度高了一级。还不如调用reverse。
             else:
                 rl[cur[1]].append(cur[0].val)
             if cur[0].left:

@@ -18,8 +18,3 @@ class Solution:
             self.helper(root.left,sum-root.val,il,rl)
             self.helper(root.right,sum-root.val,il,rl)
 			
-113 257 129
-这三题全都是通过函数参数，来进行函数间的信息传递
-但是也可以像437题那样，通过return来进行函数间的信息传递
-这不冲突，你看，我这个helper函数就没有return，说明我用的是函数参数传递
-那么什么样的题适合用return在函数之间进行信息传递呢，见437.
